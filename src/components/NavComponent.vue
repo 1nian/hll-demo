@@ -3,19 +3,33 @@
     <div class="aside-icon">
       <img src="../assets/logo.png" alt="" />
     </div>
-    <div class="aside-block" >
-        <p class="nav-icon el-icon-house"></p>
-        <p class="nav-name">首页</p>
-    </div>                   
-    <div class="aside-block" >
-        <p class="nav-icon el-icon-house"></p>
-        <p class="nav-name">首页</p>
+    <div
+      v-for="(nav, index) in navData"
+      :key="index"
+      @click="changeNav(nav)"
+    >
+      <div class="aside-block">
+        <p :class="['nav-icon' , nav.className]"></p>
+        <p class="nav-name">{{ nav.title }}</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    navData: {
+      type: Array,
+      default: () => [],
+    },
+  },
+  methods: {
+    changeNav(item) {
+      this.$router.push({ name:item.name });
+    },
+  },
+};
 </script>
 
 <style>
@@ -24,9 +38,9 @@ export default {};
   height: 36px;
   margin: 18px auto;
 }
-.aside-icon img{
-    width: 100%;
-    height: 100%;
+.aside-icon img {
+  width: 100%;
+  height: 100%;
 }
 .aside-block {
   width: 80px;
@@ -38,12 +52,12 @@ export default {};
   padding: 18px 0;
   box-sizing: border-box;
 }
-.nav-icon{
-    font-size: 20px;
-    margin-bottom: 10px;
+.nav-icon {
+  font-size: 20px;
+  margin-bottom: 10px;
 }
-.active{
-    background-color: #2C3944;
-    opacity: 1;
+.nav-active {
+  background-color: #2c3944;
+  opacity: 1;
 }
 </style>

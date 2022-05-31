@@ -6,7 +6,18 @@ import './plugins/element.js'
 
 Vue.config.productionTip = false;
 
-
+router.beforeEach((to,from,next) => {
+  let token = sessionStorage.getItem('token');
+  if(to.meta.isAuth){
+    if(token){
+      next()
+    }else{
+      next({name:"login"})
+    }
+  }else{
+    next()
+  }
+})
 
 new Vue({
   router,

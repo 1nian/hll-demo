@@ -1,6 +1,8 @@
 <template>
   <el-container>
-    <el-aside class="hll-aside" width="80px"><nav-component></nav-component></el-aside>
+    <el-aside class="hll-aside" width="80px">
+      <nav-component :navData="navData"></nav-component>
+      </el-aside>
     <el-container>
       <el-header class="hll-header">
         <p class="hll-header-text">智慧园区IOC运营中心综合信息管理系统</p>
@@ -31,6 +33,14 @@ import NavComponent from '../components/NavComponent.vue'
 export default {
   components:{
     NavComponent
+  },
+  data(){
+    return {
+      navData:[
+        {id:1,name:"IndexView",title:"首页",className:"el-icon-house"},
+        {id:2,name:"InfoView",title:"信息",className:"el-icon-house"}
+      ]
+    }
   }
 };
 </script>

@@ -1,5 +1,6 @@
 <template>
-  <div class="login">
+  <div class="login-block">
+    <div class="login">
     <el-card class="box-card">
       <div class="rich-text">
         <p>智慧矿山IOC运营中心</p>
@@ -47,6 +48,7 @@
         </el-form>
       </div>
     </el-card>
+  </div>
   </div>
 </template>
 
@@ -176,6 +178,8 @@ export default {
           });
           sessionStorage.setItem('userInfo',JSON.stringify(this.loginForm));
           sessionStorage.setItem('token',JSON.stringify(Date.now()));
+          this.$store.commit('setUserInfo',this.loginForm);
+          this.$store.commit('setTtoken',JSON.stringify(Date.now()));
           this.$router.push({name:"home"})
         } else {
           return false;
@@ -186,9 +190,20 @@ export default {
 };
 </script>
 <style>
+.login-block{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row-reverse;
+  background-image: url('../assets/login-bg.png') ;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  padding: 30px 20px 30px 0;
+  box-sizing: border-box;
+}
 .login {
-  width: 700px;
-  height: 830px;
+  /* width: 700px; */
+  height: 635px;
 }
 .text {
   font-size: 14px;
@@ -200,7 +215,6 @@ export default {
 
 .box-card {
   width: 100%;
-  padding-left: 110px;
   box-sizing: border-box;
 }
 .rich-text {

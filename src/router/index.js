@@ -19,13 +19,39 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    component: () => import('../views/HomeView.vue')
+    // redirect:"/index",
+    component: () => import('../views/HomeView.vue'),
+    meta:{
+      isAuth:true
+    },
+    children:[
+      {
+        path: '/index',
+        name: 'IndexView',
+        component: () => import('../views/IndexView.vue'),
+        meta:{
+          isAuth:true
+        }
+      },
+      {
+        path: '/info',
+        name: 'InfoView',
+        component: () => import('../views/InfoView.vue'),
+        meta:{
+          isAuth:true
+        }
+      },
+      
+    ]
   },
+  
+  
   
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  linkActiveClass: 'nav-active',
 })
 
 
