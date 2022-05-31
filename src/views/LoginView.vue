@@ -174,10 +174,10 @@ export default {
             message: "登录成功，欢迎进入系统",
             type: "success",
           });
-          console.log(formName);
-          sessionStorage.setItem('userInfo',this.loginForm)
+          sessionStorage.setItem('userInfo',JSON.stringify(this.loginForm));
+          sessionStorage.setItem('token',JSON.stringify(Date.now()));
+          this.$router.push({name:"home"})
         } else {
-          console.log("error submit!!");
           return false;
         }
       });

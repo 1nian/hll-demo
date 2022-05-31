@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-aside width="200px">Aside</el-aside>
+    <el-aside class="hll-aside" width="80px"><nav-component></nav-component></el-aside>
     <el-container>
       <el-header class="hll-header">
         <p class="hll-header-text">智慧园区IOC运营中心综合信息管理系统</p>
@@ -9,7 +9,7 @@
             class="header-right-img"
             src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
           ></el-avatar>
-          <el-dropdown class="header-right-username">
+          <el-dropdown class="header-right-username" trigger="click">
             <span class="el-dropdown-link">
               下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
@@ -21,13 +21,18 @@
           </el-dropdown>
         </div>
       </el-header>
-      <el-main>Main</el-main>
+      <el-main><router-view /></el-main>
     </el-container>
   </el-container>
 </template>
 
 <script>
-export default {};
+import NavComponent from '../components/NavComponent.vue'
+export default {
+  components:{
+    NavComponent
+  }
+};
 </script>
 
 <style>
@@ -44,7 +49,7 @@ export default {};
   text-align: left;
   line-height: 100%;
 }
-.hll-header-right{
+.hll-header-right {
   display: flex;
   align-items: center;
 }
@@ -57,7 +62,11 @@ export default {};
 .header-right-username {
   font-size: 14px;
 }
-.header-right-username:hover{
+.header-right-username:hover {
   cursor: pointer;
+}
+.hll-aside {
+  width: 80px;
+  background-color: #35495d;
 }
 </style>
