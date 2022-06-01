@@ -8,7 +8,7 @@
       :key="index"
       @click="changeNav(nav)"
     >
-      <div class="aside-block">
+      <div :class="['aside-block',{'nav-active':routerName === nav.name}]">
         <p :class="['nav-icon' , nav.className]"></p>
         <p class="nav-name">{{ nav.title }}</p>
       </div>
@@ -24,8 +24,14 @@ export default {
       default: () => [],
     },
   },
+  data(){
+    return {
+      routerName:this.$route.name
+    }
+  },
   methods: {
     changeNav(item) {
+      this.routerName = item.name;
       this.$router.push({ name:item.name });
     },
   },
@@ -59,5 +65,9 @@ export default {
 .nav-active {
   background-color: #2c3944;
   opacity: 1;
+}
+
+.aside-block:hover{
+  cursor: pointer;
 }
 </style>

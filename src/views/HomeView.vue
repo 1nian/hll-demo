@@ -2,7 +2,7 @@
   <el-container class="hll-container">
     <el-aside class="hll-aside" width="80px">
       <nav-component :navData="navData"></nav-component>
-      </el-aside>
+    </el-aside>
     <el-container>
       <el-header class="hll-header">
         <p class="hll-header-text">智慧园区IOC运营中心综合信息管理系统</p>
@@ -29,32 +29,32 @@
 </template>
 
 <script>
-import NavComponent from '../components/NavComponent.vue'
+import NavComponent from "../components/NavComponent.vue";
 export default {
-  components:{
-    NavComponent
+  components: {
+    NavComponent,
   },
-  data(){
+  data() {
     return {
-      navData:[
-        {id:1,name:"IndexView",title:"首页",className:"el-icon-house"},
-        {id:2,name:"InfoView",title:"信息",className:"el-icon-house"}
-      ]
-    }
-  }
+      navData: [
+        { id: 1, name: "IndexView", title: "首页", className: "el-icon-house" },
+        { id: 2, name: "InfoView", title: "信息", className: "el-icon-house" },
+      ],
+    };
+  },
 };
 </script>
 
 <style>
-.hll-container{
-  background-color: #F3F4F7;
+.hll-container {
+  background-color: #f3f4f7;
 }
 .hll-header {
   height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 .hll-header-text {
   font-size: 18px;
@@ -82,10 +82,10 @@ export default {
   width: 80px;
   background-color: #35495d;
 }
-.hll-main{
+.hll-main {
   height: 888px;
   margin: 10px;
   padding: 0;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 </style>
