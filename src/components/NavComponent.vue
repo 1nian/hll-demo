@@ -10,7 +10,7 @@
         </div>
       </div>
     </div>
-    <div class="aside-right">
+    <div class="aside-right" v-if="isSecond">
       <router-link v-for="(n_sec,i_sec) in routerSecondData" :key="i_sec" class="nav-second" :to="n_sec.path">{{n_sec.title}}</router-link>
     </div>
   </div>
@@ -27,14 +27,22 @@ export default {
   data() {
     return {
       routerName: this.$route.name,
-      routerSecondData:[]
+      routerSecondData:[],
+      isSecond:false
     };
   },
   methods: {
     changeNav(item) {
       this.routerName = item.name;
-      this.routerSecondData = item.children;
       this.$router.push({ name: item.name });
+      if(item.children && item.children.length){
+        this.routerSecondData = item.children;
+        this.isSecond = true;
+        this.$emit("setAsideWidth","240px")
+      }else{
+        this.isSecond = false;
+        this.$emit("setAsideWidth","80px")
+      }
     },
   },
 };

@@ -25,8 +25,8 @@
       </div>
     </el-header>
     <el-container>
-      <el-aside class="hll-aside" width="240px">
-        <nav-component :navData="navData"></nav-component>
+      <el-aside class="hll-aside" :width="asideWidth">
+        <nav-component :navData="navData" @setAsideWidth="getAsideWidth"></nav-component>
       </el-aside>
       <el-main class="hll-main"><router-view /></el-main>
     </el-container>
@@ -43,6 +43,7 @@ export default {
   data() {
     return {
       navData: [],
+      asideWidth:"80px"
     };
   },
   created() {
@@ -63,6 +64,9 @@ export default {
     layout(){
       this.$router.push({name:"login"});
       sessionStorage.clear()
+    },
+    getAsideWidth(item){
+      this.asideWidth = item;
     }
   }
 };
