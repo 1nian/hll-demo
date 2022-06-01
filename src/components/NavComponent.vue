@@ -1,14 +1,17 @@
 <template>
-  <div>
-    <div
-      v-for="(nav, index) in navData"
-      :key="index"
-      @click="changeNav(nav)"
-    >
-      <div :class="['aside-block',{'nav-active':routerName === nav.name}]">
-        <p :class="['nav-icon' , nav.className]"></p>
-        <p class="nav-name">{{ nav.title }}</p>
+  <div class="hll-aside">
+    <div class="aside-left">
+      <div v-for="(nav, index) in navData" :key="index" @click="changeNav(nav)">
+        <div
+          :class="['aside-block', { 'nav-active': routerName === nav.name }]"
+        >
+          <p :class="['nav-icon', nav.className]"></p>
+          <p class="nav-name">{{ nav.title }}</p>
+        </div>
       </div>
+    </div>
+    <div class="aside-right">
+      <router-link v-for="(n_sec,i_sec) in routerSecondData" :key="i_sec" class="nav-second" :to="n_sec.path">{{n_sec.title}}</router-link>
     </div>
   </div>
 </template>
@@ -21,21 +24,27 @@ export default {
       default: () => [],
     },
   },
-  data(){
+  data() {
     return {
-      routerName:this.$route.name
-    }
+      routerName: this.$route.name,
+      routerSecondData:[]
+    };
   },
   methods: {
     changeNav(item) {
       this.routerName = item.name;
-      this.$router.push({ name:item.name });
+      this.routerSecondData = item.children;
+      this.$router.push({ name: item.name });
     },
   },
 };
 </script>
 
 <style>
+.hll-aside {
+  background-color: #35495d;
+  display: flex;
+}
 .aside-block {
   width: 80px;
   height: 80px;
@@ -55,7 +64,27 @@ export default {
   opacity: 1;
 }
 
-.aside-block:hover{
+.aside-block:hover {
   cursor: pointer;
+}
+
+.aside-right{
+  width: 160px;
+  background-color: #ffffff;
+}
+.nav-second{
+  width: 100%;
+  height: 40px;
+  font-size: 14px;
+  color: #555555;
+  display: block;
+  line-height: 40px;
+  text-decoration: none;
+}
+
+.router-link-exact-active{
+  background-color: #F5F7FD;
+  color: #5473E8;
+  font-weight: bold;
 }
 </style>

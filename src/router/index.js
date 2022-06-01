@@ -5,8 +5,8 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path:'/',
-    redirect:'/login'
+    path: '/',
+    redirect: '/login'
   },
   {
     path: '/login',
@@ -19,48 +19,74 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    redirect:"/index",
+    redirect: "/index",
     component: () => import('../views/HomeView.vue'),
-    meta:{
-      isAuth:true
+    meta: {
+      isAuth: true
     },
-    children:[
+    children: [
       {
         path: '/index',
         name: 'IndexView',
         component: () => import('../views/IndexView.vue'),
-        meta:{
-          isAuth:true
+        meta: {
+          isAuth: true
         }
       },
       {
         path: '/info',
         name: 'InfoView',
         component: () => import('../views/InfoView.vue'),
-        meta:{
-          isAuth:true
+        meta: {
+          isAuth: true
         }
       },
-      
+      {
+        path: '/security',
+        name: 'SecurityIndex',
+        redirect: '/security/equipment',
+        component: () => import('../views/security/Index.vue'),
+        meta: {
+          isAuth: true
+        },
+        children: [
+          {
+            path: '/security/equipment',
+            name: 'SecurityEquipment',
+            component: () => import('../views/security/Equipment.vue'),
+            meta: {
+              isAuth: true
+            },
+          },
+          {
+            path: '/security/blacklist',
+            name: "SecurityBlackList",
+            component: () => import('../views/security/BlackList.vue'),
+            meta: {
+              isAuth: true
+            },
+          },
+        ]
+      },
+
     ]
   },
-  
-  
-  
+
+
+
 ]
 
 
 // 解决重复点击路由报错
 
 const originalPush = VueRouter.prototype.push
-VueRouter.prototype.push = function push (location) {
-    return originalPush.call(this, location).catch(err => err)
-} 
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 
 
 const router = new VueRouter({
   routes,
-  linkActiveClass: 'nav-active',
 })
 
 

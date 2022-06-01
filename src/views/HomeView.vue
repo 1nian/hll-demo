@@ -25,7 +25,7 @@
       </div>
     </el-header>
     <el-container>
-      <el-aside class="hll-aside" width="80">
+      <el-aside class="hll-aside" width="240px">
         <nav-component :navData="navData"></nav-component>
       </el-aside>
       <el-main class="hll-main"><router-view /></el-main>
@@ -35,21 +35,21 @@
 
 <script>
 import NavComponent from "../components/NavComponent.vue";
+import {routeInfo} from "../router/routeInfo"
 export default {
   components: {
     NavComponent,
   },
   data() {
     return {
-      navData: [
-        { id: 1, name: "IndexView", title: "首页", className: "el-icon-house" },
-        { id: 2, name: "InfoView", title: "信息", className: "el-icon-house" },
-      ],
+      navData: [],
     };
   },
   created() {
     this.$store.commit("setUserInfo", JSON.parse(sessionStorage.getItem("userInfo")));
     this.$store.commit("setTtoken", sessionStorage.getItem('token'));
+
+    this.navData = routeInfo;
   },
   methods:{
     handleCommand(item){
@@ -122,9 +122,6 @@ export default {
 }
 .layout{
   color: #FF5E4E;
-}
-.hll-aside {
-  background-color: #35495d;
 }
 .hll-main {
   height: 888px;
