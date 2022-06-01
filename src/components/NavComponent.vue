@@ -1,8 +1,5 @@
 <template>
   <div>
-    <div class="aside-icon">
-      <img src="../assets/logo.png" alt="" />
-    </div>
     <div
       v-for="(nav, index) in navData"
       :key="index"
@@ -39,15 +36,6 @@ export default {
 </script>
 
 <style>
-.aside-icon {
-  width: 36px;
-  height: 36px;
-  margin: 18px auto;
-}
-.aside-icon img {
-  width: 100%;
-  height: 100%;
-}
 .aside-block {
   width: 80px;
   height: 80px;

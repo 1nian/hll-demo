@@ -178,9 +178,7 @@ export default {
           });
           sessionStorage.setItem('userInfo',JSON.stringify(this.loginForm));
           sessionStorage.setItem('token',JSON.stringify(Date.now()));
-          this.$store.commit('setUserInfo',this.loginForm);
-          this.$store.commit('setTtoken',JSON.stringify(Date.now()));
-          this.$router.push({name:"home"})
+          this.$router.push({name:"home"});
         } else {
           return false;
         }

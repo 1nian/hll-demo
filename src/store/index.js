@@ -12,8 +12,7 @@ export default new Vuex.Store({
   },
   mutations: {
     setUserInfo(state,userInfo){
-      state.userInfo = userInfo;
-      console.log(userInfo)
+      state.userInfo = userInfo
     },
 
     setTtoken(state,token){

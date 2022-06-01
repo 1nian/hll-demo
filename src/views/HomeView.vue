@@ -1,28 +1,33 @@
 <template>
   <el-container class="hll-container">
-    <el-aside class="hll-aside" width="80px">
-      <nav-component :navData="navData"></nav-component>
-    </el-aside>
-    <el-container>
-      <el-header class="hll-header">
-        <p class="hll-header-text">智慧园区IOC运营中心综合信息管理系统</p>
-        <div class="hll-header-right">
+    <el-header class="hll-header">
+      <div class="hll-header-icon">
+        <img src="../assets/logo.png" alt="" />
+      </div>
+      <div class="hll-header-right">
+        <div class="hll-header-text">智慧园区IOC运营中心综合信息管理系统</div>
+        <div style="margin-right: 20px">
           <el-avatar
             class="header-right-img"
             src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
           ></el-avatar>
-          <el-dropdown class="header-right-username" trigger="click">
+          <el-dropdown class="header-right-username" trigger="click" @command="handleCommand">
             <span class="el-dropdown-link">
-              下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+              {{this.$store.state.userInfo.userName}}<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>黄金糕</el-dropdown-item>
-              <el-dropdown-item>狮子头</el-dropdown-item>
-              <el-dropdown-item>螺蛳粉</el-dropdown-item>
+              <el-dropdown-item command="个人中心">个人中心</el-dropdown-item>
+              <el-dropdown-item command="修改密码">修改密码</el-dropdown-item>
+              <el-dropdown-item class="layout" command="layout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>
-      </el-header>
+      </div>
+    </el-header>
+    <el-container>
+      <el-aside class="hll-aside" width="80">
+        <nav-component :navData="navData"></nav-component>
+      </el-aside>
       <el-main class="hll-main"><router-view /></el-main>
     </el-container>
   </el-container>
@@ -42,6 +47,24 @@ export default {
       ],
     };
   },
+  created() {
+    this.$store.commit("setUserInfo", JSON.parse(sessionStorage.getItem("userInfo")));
+    this.$store.commit("setTtoken", sessionStorage.getItem('token'));
+  },
+  methods:{
+    handleCommand(item){
+      switch(item){
+        case "layout": this.layout()
+        break;
+
+        default : alert(item)
+      }
+    },
+    layout(){
+      this.$router.push({name:"login"});
+      sessionStorage.clear()
+    }
+  }
 };
 </script>
 
@@ -50,36 +73,57 @@ export default {
   background-color: #f3f4f7;
 }
 .hll-header {
+  width: 100%;
   height: 60px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   background-color: #ffffff;
+  padding: 0;
 }
+.hll-header-icon {
+  width: 80px;
+  height: 60px;
+  background-color: #35495d;
+}
+.hll-header-icon img {
+  width: 36px;
+  height: 36px;
+  margin-top: 11px;
+}
+
+.hll-header-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .hll-header-text {
   font-size: 18px;
   color: #222222;
   text-align: left;
   line-height: 100%;
+  margin-left: 20px;
 }
-.hll-header-right {
-  display: flex;
-  align-items: center;
-}
+
 .header-right-img {
   width: 28px;
   height: 28px;
   margin-right: 10px;
   border-radius: 50%;
+  vertical-align: middle;
 }
 .header-right-username {
   font-size: 14px;
+  vertical-align: middle;
 }
 .header-right-username:hover {
   cursor: pointer;
 }
+.layout{
+  color: #FF5E4E;
+}
 .hll-aside {
-  width: 80px;
   background-color: #35495d;
 }
 .hll-main {
