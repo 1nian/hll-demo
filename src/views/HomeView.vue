@@ -1,5 +1,5 @@
 <template>
-  <el-container>
+  <el-container class="hll-container">
     <el-aside class="hll-aside" width="80px">
       <nav-component :navData="navData"></nav-component>
       </el-aside>
@@ -23,7 +23,7 @@
           </el-dropdown>
         </div>
       </el-header>
-      <el-main><router-view /></el-main>
+      <el-main class="hll-main"><router-view /></el-main>
     </el-container>
   </el-container>
 </template>
@@ -46,16 +46,19 @@ export default {
 </script>
 
 <style>
+.hll-container{
+  background-color: #F3F4F7;
+}
 .hll-header {
   height: 60px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-color: #FFFFFF;
 }
 .hll-header-text {
   font-size: 18px;
   color: #222222;
-  margin-left: 20px;
   text-align: left;
   line-height: 100%;
 }
@@ -78,5 +81,11 @@ export default {
 .hll-aside {
   width: 80px;
   background-color: #35495d;
+}
+.hll-main{
+  height: 888px;
+  margin: 10px;
+  padding: 0;
+  background-color: #FFFFFF;
 }
 </style>

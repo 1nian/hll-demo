@@ -192,18 +192,19 @@ export default {
 <style>
 .login-block{
   width: 100%;
-  height: 100%;
+  height: 968px;
   display: flex;
   flex-direction: row-reverse;
+  align-items: center;
   background-image: url('../assets/login-bg.png') ;
   background-repeat: no-repeat;
-  background-size: 100% 100%;
-  padding: 30px 20px 30px 0;
+  background-size: cover;
+  padding: 30px 220px 30px 0;
   box-sizing: border-box;
 }
 .login {
   /* width: 700px; */
-  height: 635px;
+  /* height: 908px; */
 }
 .text {
   font-size: 14px;

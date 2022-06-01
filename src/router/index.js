@@ -19,7 +19,7 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    // redirect:"/index",
+    redirect:"/index",
     component: () => import('../views/HomeView.vue'),
     meta:{
       isAuth:true
