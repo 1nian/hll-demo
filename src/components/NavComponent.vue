@@ -11,7 +11,13 @@
       </div>
     </div>
     <div class="aside-right" v-if="isSecond">
-      <router-link v-for="(n_sec,i_sec) in routerSecondData" :key="i_sec" class="nav-second" :to="n_sec.path">{{n_sec.title}}</router-link>
+      <router-link
+        v-for="(n_sec, i_sec) in routerSecondData"
+        :key="i_sec"
+        class="nav-second"
+        :to="n_sec.path"
+        >{{ n_sec.title }}</router-link
+      >
     </div>
   </div>
 </template>
@@ -26,23 +32,40 @@ export default {
   },
   data() {
     return {
-      routerName: this.$route.name,
-      routerSecondData:[],
-      isSecond:false
+      routerName: this.$store.state.routerName,
+      routerSecondData: this.$store.state.routerSecondData,
+      isSecond: this.$store.state.isSecond,
     };
   },
   methods: {
     changeNav(item) {
       this.routerName = item.name;
       this.$router.push({ name: item.name });
-      if(item.children && item.children.length){
+      if (item.children && item.children.length) {
         this.routerSecondData = item.children;
         this.isSecond = true;
-        this.$emit("setAsideWidth","240px")
-      }else{
+        this.$emit("setAsideWidth", "240px");
+
+        // 状态存储
+        sessionStorage.setItem("isSecond", true);
+        sessionStorage.setItem("asideWidth", "240px");
+        sessionStorage.setItem(
+          "routerSecondData",
+          JSON.stringify(item.children)
+        );
+      } else {
+        this.routerSecondData = [];
         this.isSecond = false;
-        this.$emit("setAsideWidth","80px")
+        this.$emit("setAsideWidth", "80px");
+
+        // 状态存储
+        sessionStorage.setItem("isSecond", false);
+        sessionStorage.setItem("asideWidth", "80px");
+        sessionStorage.setItem("routerSecondData", JSON.stringify([]));
       }
+
+      //存储页面操作时的状态
+      sessionStorage.setItem("routerName", item.name);
     },
   },
 };
@@ -76,11 +99,11 @@ export default {
   cursor: pointer;
 }
 
-.aside-right{
+.aside-right {
   width: 160px;
   background-color: #ffffff;
 }
-.nav-second{
+.nav-second {
   width: 100%;
   height: 40px;
   font-size: 14px;
@@ -90,9 +113,9 @@ export default {
   text-decoration: none;
 }
 
-.router-link-exact-active{
-  background-color: #F5F7FD;
-  color: #5473E8;
+.router-link-exact-active {
+  background-color: #f5f7fd;
+  color: #5473e8;
   font-weight: bold;
 }
 </style>

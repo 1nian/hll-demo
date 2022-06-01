@@ -11,14 +11,21 @@
             class="header-right-img"
             src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
           ></el-avatar>
-          <el-dropdown class="header-right-username" trigger="click" @command="handleCommand">
+          <el-dropdown
+            class="header-right-username"
+            trigger="click"
+            @command="handleCommand"
+          >
             <span class="el-dropdown-link">
-              {{this.$store.state.userInfo.userName}}<i class="el-icon-arrow-down el-icon--right"></i>
+              {{ this.$store.state.userInfo.userName
+              }}<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item command="个人中心">个人中心</el-dropdown-item>
               <el-dropdown-item command="修改密码">修改密码</el-dropdown-item>
-              <el-dropdown-item class="layout" command="layout">退出登录</el-dropdown-item>
+              <el-dropdown-item class="layout" command="layout"
+                >退出登录</el-dropdown-item
+              >
             </el-dropdown-menu>
           </el-dropdown>
         </div>
@@ -26,7 +33,10 @@
     </el-header>
     <el-container>
       <el-aside class="hll-aside" :width="asideWidth">
-        <nav-component :navData="navData" @setAsideWidth="getAsideWidth"></nav-component>
+        <nav-component
+          :navData="navData"
+          @setAsideWidth="getAsideWidth"
+        ></nav-component>
       </el-aside>
       <el-main class="hll-main"><router-view /></el-main>
     </el-container>
@@ -35,7 +45,7 @@
 
 <script>
 import NavComponent from "../components/NavComponent.vue";
-import {routeInfo} from "../router/routeInfo"
+import { routeInfo } from "../router/routeInfo";
 export default {
   components: {
     NavComponent,
@@ -43,32 +53,49 @@ export default {
   data() {
     return {
       navData: [],
-      asideWidth:"80px"
+      asideWidth: "80px",
     };
   },
   created() {
-    this.$store.commit("setUserInfo", JSON.parse(sessionStorage.getItem("userInfo")));
-    this.$store.commit("setTtoken", sessionStorage.getItem('token'));
+    this.$store.commit(
+      "setUserInfo",
+      JSON.parse(sessionStorage.getItem("userInfo"))
+    );
+    this.$store.commit("setTtoken", sessionStorage.getItem("token"));
+    this.$store.commit("setRouterName", sessionStorage.getItem("routerName"));
+    this.$store.commit(
+      "setIsSecond",
+      JSON.parse(sessionStorage.getItem("isSecond"))
+    );
+    this.$store.commit("setRouterName", sessionStorage.getItem("routerName"));
+    this.$store.commit("setAsideWidth", sessionStorage.getItem("asideWidth"));
+    this.$store.commit(
+      "setRouterSecondData",
+      JSON.parse(sessionStorage.getItem("routerSecondData"))
+    );
 
     this.navData = routeInfo;
+    this.asideWidth = this.$store.state.asideWidth;
   },
-  methods:{
-    handleCommand(item){
-      switch(item){
-        case "layout": this.layout()
-        break;
+  methods: {
+    handleCommand(item) {
+      switch (item) {
+        case "layout":
+          this.layout();
+          break;
 
-        default : alert(item)
+        default:
+          alert(item);
       }
     },
-    layout(){
-      this.$router.push({name:"login"});
-      sessionStorage.clear()
+    layout() {
+      this.$router.push({ name: "login" });
+      sessionStorage.clear();
     },
-    getAsideWidth(item){
+    getAsideWidth(item) {
       this.asideWidth = item;
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -124,8 +151,8 @@ export default {
 .header-right-username:hover {
   cursor: pointer;
 }
-.layout{
-  color: #FF5E4E;
+.layout {
+  color: #ff5e4e;
 }
 .hll-main {
   height: 888px;
