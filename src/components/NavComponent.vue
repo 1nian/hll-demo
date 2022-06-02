@@ -32,7 +32,7 @@ export default {
   },
   data() {
     return {
-      routerName: this.$store.state.routerName,
+      routerName: this.$store.state.routerName || this.$route.name,
       routerSecondData: this.$store.state.routerSecondData,
       isSecond: this.$store.state.isSecond,
     };
