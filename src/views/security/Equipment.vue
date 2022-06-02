@@ -1,5 +1,6 @@
 <template>
   <div class="security-equipment">
+    <hll-search></hll-search>
     <hll-table :titleData="titleData" :tableData="filterTableData"
     :currentPage="currentPage" :pageSize="pageSize" :total="total"
     @sizeChange="getSizeChange" @currentChange="getCurrentChange"
@@ -9,11 +10,13 @@
 
 <script>
 import HllTable from '../../components/HllTable.vue'
+import HllSearch from '../../components/HllSearch.vue'
 import {getList} from '../../api/getData'
 export default {
   name: "SecurityEquipment",
   components:{
-    HllTable
+    HllTable,
+    HllSearch
   },
   data() {
     return {

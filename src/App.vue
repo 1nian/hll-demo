@@ -23,4 +23,12 @@ export default {
   margin: 0;
   padding: 0;
 }
+#app .hll-el-button {
+  border-color: #5473e8;
+  background:#5473E8;
+  color: #ffffff;
+}
+.el-input__inner:focus {
+  border-color: #5473e8;
+}
 </style>
