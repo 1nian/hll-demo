@@ -13,9 +13,17 @@
       </el-table-column>
       <el-table-column label="操作" v-if="isOperation">
         <template slot-scope="scope">
-          <el-button type="text" @click="see(scope.row)">查看</el-button>
-          <el-button type="text" @click="edit(scope.row)">编辑</el-button>
-          <el-button class="button-del" type="text" @click="del(scope.row)"
+          <el-button v-if="isSee" type="text" @click="see(scope.row)"
+            >查看</el-button
+          >
+          <el-button v-if="isEdit" type="text" @click="edit(scope.row)"
+            >编辑</el-button
+          >
+          <el-button
+            v-if="isDel"
+            class="button-del"
+            type="text"
+            @click="del(scope.row)"
             >删除</el-button
           >
         </template>
@@ -55,6 +63,21 @@ export default {
     isOperation: {
       type: Boolean,
       default: false,
+    },
+    // 查看按钮是否出现
+    isSee: {
+      type: Boolean,
+      default: true,
+    },
+    // 编辑按钮是否出现
+    isEdit: {
+      type: Boolean,
+      default: true,
+    },
+    // 删除按钮是否出现
+    isDel: {
+      type: Boolean,
+      default: true,
     },
 
     // 是否开启分页
@@ -106,6 +129,7 @@ export default {
 </script>
 <style>
 .hll-table {
+  margin-top: 20px;
 }
 .has-gutter {
 }
