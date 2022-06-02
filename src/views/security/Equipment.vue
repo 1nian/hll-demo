@@ -9,6 +9,7 @@
 
 <script>
 import HllTable from '../../components/HllTable.vue'
+import {getList} from '../../api/getData'
 export default {
   name: "SecurityEquipment",
   components:{
@@ -16,28 +17,7 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄",
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄",
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
-      ],
+      tableData: [],
       titleData: [
         { label: "名称", prop: "name" },
         { label: "日期", prop: "date" },
@@ -48,7 +28,16 @@ export default {
       total:100,
     };
   },
+  mounted(){
+    this.getTableData()
+  },
   methods:{
+    async getTableData(){
+      const res = await getList();
+      if(res.data.code === 200){
+        this.tableData = res.data.data.data
+      }
+    },
     getSizeChange(val){
       this.pageSize = val;
       this.currentPage = 1;
