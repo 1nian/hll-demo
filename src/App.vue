@@ -28,7 +28,7 @@ export default {
   background:#5473E8;
   color: #ffffff;
 }
-.el-input__inner:focus {
+#app .el-input__inner:focus {
   border-color: #5473e8;
 }
 #app .el-tabs__item.is-active{

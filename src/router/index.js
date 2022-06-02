@@ -68,7 +68,25 @@ const routes = [
           },
         ]
       },
-
+      {
+        path: '/setting',
+        name: 'SettingIndex',
+        redirect: '/setting/info',
+        component: () => import('../views/setting/Index.vue'),
+        meta: {
+          isAuth: true
+        },
+        children:[
+          {
+            path:"/setting/info",
+            name:"UserInfo",
+            component: () => import('../views/setting/UserInfo.vue'),
+            meta: {
+              isAuth: true
+            },
+          }
+        ]
+      }
     ]
   },
 
