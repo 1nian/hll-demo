@@ -1,6 +1,6 @@
 <template>
   <div class="security-equipment">
-    <hll-table :titleData="titleData" :tableData="tableData"
+    <hll-table :titleData="titleData" :tableData="filterTableData"
     :currentPage="currentPage" :pageSize="pageSize" :total="total"
     @sizeChange="getSizeChange" @currentChange="getCurrentChange"
     ></hll-table>
@@ -23,10 +23,15 @@ export default {
         { label: "日期", prop: "date" },
         { label: "地址", prop: "address" },
       ],
-      currentPage:1,
+      currentPage:0,
       pageSize:10,
-      total:100,
+      total:0,
     };
+  },
+  computed:{
+    filterTableData(){
+      return this.tableData.slice(this.currentPage,(this.pageSize+this.currentPage))
+    }
   },
   mounted(){
     this.getTableData()
@@ -36,6 +41,7 @@ export default {
       const res = await getList();
       if(res.data.code === 200){
         this.tableData = res.data.data.data
+        this.total = res.data.total
       }
     },
     getSizeChange(val){
