@@ -155,9 +155,9 @@ export default {
   color: #ff5e4e;
 }
 .hll-main {
-  height: 888px;
+  height: 889px;
   margin: 10px;
-  padding: 0;
+  padding: 20px;
   background-color: #ffffff;
 }
 </style>
