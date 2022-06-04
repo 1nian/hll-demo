@@ -21,7 +21,7 @@
               }}<i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item command="个人中心">个人中心</el-dropdown-item>
+              <el-dropdown-item command="userInfo">个人中心</el-dropdown-item>
               <el-dropdown-item command="修改密码">修改密码</el-dropdown-item>
               <el-dropdown-item class="layout" command="layout"
                 >退出登录</el-dropdown-item
@@ -36,6 +36,7 @@
         <nav-component
           :navData="navData"
           @setAsideWidth="getAsideWidth"
+          ref="navComponent"
         ></nav-component>
       </el-aside>
       <el-main class="hll-main"><router-view /></el-main>
@@ -84,6 +85,10 @@ export default {
           this.layout();
           break;
 
+        case "userInfo":
+          this.goToUserInfo();
+          break;
+
         default:
           alert(item);
       }
@@ -94,6 +99,22 @@ export default {
     },
     getAsideWidth(item) {
       this.asideWidth = item;
+    },
+    goToUserInfo() {
+      let parpams = {
+        id: 3,
+        name: "SettingIndex",
+        title: "系统设置",
+        className: "el-icon-setting",
+        children: [
+          {
+            name: "UserInfo",
+            title: "个人中心",
+            path: "/setting/info",
+          },
+        ],
+      };
+      this.$refs.navComponent.changeNav(parpams);
     },
   },
 };
