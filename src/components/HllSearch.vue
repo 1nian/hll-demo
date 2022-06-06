@@ -1,8 +1,17 @@
 <template>
   <div class="hll-search">
+    <el-select class="hll-search-select" v-model="valueSelect" :placeholder="placeholderSelect" v-if="isSelect">
+      <el-option
+        v-for="(item, index) in optionSelect"
+        :key="index"
+        :label="item.label"
+        :value="item.prop"
+      >
+      </el-option>
+    </el-select>
     <el-input
       class="hll-search-input"
-      v-model="value"
+      v-model="valueInput"
       :placeholder="placeholder"
     ></el-input>
     <el-button class="hll-el-button hll-search-button" @click="serach"
@@ -22,22 +31,39 @@ export default {
       type: String,
       default: "搜索文本框",
     },
+    isSelect: {
+      type: Boolean,
+      default: false,
+    },
+    placeholderSelect:{
+      type: String,
+      default: "选择文本框",
+    },
+    optionSelect: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
-      value: "",
+      valueInput: "",
+      valueSelect: this.optionSelect[0].label,
       isClear: false,
     };
   },
   methods: {
     serach() {
-      if (this.value) {
+      let params = {}
+      if (this.valueInput || this.valueSelect) {
         this.isClear = true;
-        this.$emit("searchData", this.value);
+        params['valueInput'] = this.valueInput;
+        params['valueSelect'] = this.valueSelect;
+        this.$emit("searchData", params);
       }
     },
     clear() {
-      this.value = "";
+      this.valueInput = "";
+      this.valueSelect = this.optionSelect[0].label,
       this.isClear = false;
       this.$emit("searchData", null);
     },
@@ -55,5 +81,9 @@ export default {
 }
 .hll-search-button {
   width: 88px;
+}
+.hll-search-select{
+  width: 160px;
+  margin-right: 10px;
 }
 </style>
