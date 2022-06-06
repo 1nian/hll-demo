@@ -33,6 +33,11 @@ export const routeInfo = [
                 name: "ControlTraffic",
                 title: "交通管理",
                 path: "/control/traffic"
+            },
+            {
+                name:"ControlVisitor",
+                title: "访客管理",
+                path: "/control/visitor"
             }
         ]
     },

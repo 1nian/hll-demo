@@ -92,6 +92,15 @@ const routes = [
               isAuth: true,
               isKeepAlive: true
             },
+          },
+          {
+            path: "/control/visitor",
+            name: "ControlVisitor",
+            component: () => import("../views/control/Visitor.vue"),
+            meta: {
+              isAuth: true,
+              isKeepAlive: true
+            },
           }
         ]
       },
