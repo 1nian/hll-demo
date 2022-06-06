@@ -109,7 +109,8 @@ export default {
   },
   methods: {
     see(item) {
-      console.log(item);
+      // console.log(item);
+      this.$emit('seeDtaItem',item)
     },
     edit(item) {
       console.log(item);
@@ -157,5 +158,11 @@ export default {
 }
 .el-pagination.is-background .el-pager li:not(.disabled).active {
   background-color: #5473e8;
+}
+.el-button--text:hover {
+  color: #5473e8;
+}
+.button-del:hover {
+  color: #ff5e4e;
 }
 </style>
