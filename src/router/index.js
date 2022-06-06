@@ -23,7 +23,7 @@ const routes = [
     component: () => import('../views/HomeView.vue'),
     meta: {
       isAuth: true,
-      isKeepAlive:false
+      isKeepAlive: false
     },
     children: [
       {
@@ -32,7 +32,7 @@ const routes = [
         component: () => import('../views/IndexView.vue'),
         meta: {
           isAuth: true,
-          isKeepAlive:false
+          isKeepAlive: false
         }
       },
       {
@@ -41,7 +41,7 @@ const routes = [
         component: () => import('../views/InfoView.vue'),
         meta: {
           isAuth: true,
-          isKeepAlive:false
+          isKeepAlive: false
         }
       },
       {
@@ -51,7 +51,7 @@ const routes = [
         component: () => import('../views/security/Index.vue'),
         meta: {
           isAuth: true,
-          isKeepAlive:true
+          isKeepAlive: true
         },
         children: [
           {
@@ -60,7 +60,7 @@ const routes = [
             component: () => import('../views/security/Equipment.vue'),
             meta: {
               isAuth: true,
-              isKeepAlive:true
+              isKeepAlive: true
             },
           },
           {
@@ -69,9 +69,30 @@ const routes = [
             component: () => import('../views/security/BlackList.vue'),
             meta: {
               isAuth: true,
-              isKeepAlive:true
+              isKeepAlive: true
             },
           },
+        ]
+      },
+      {
+        path: "/control",
+        name: "ControlIndex",
+        redirect: "/control/traffic",
+        component: () => import("../views/control/Index.vue"),
+        meta: {
+          isAuth: true,
+          isKeepAlive: false
+        },
+        children: [
+          {
+            path: "/control/traffic",
+            name: "ControlTraffic",
+            component: () => import("../views/control/Traffic.vue"),
+            meta: {
+              isAuth: true,
+              isKeepAlive: true
+            },
+          }
         ]
       },
       {
@@ -81,16 +102,16 @@ const routes = [
         component: () => import('../views/setting/Index.vue'),
         meta: {
           isAuth: true,
-          isKeepAlive:true
+          isKeepAlive: false
         },
-        children:[
+        children: [
           {
-            path:"/setting/info",
-            name:"UserInfo",
+            path: "/setting/info",
+            name: "UserInfo",
             component: () => import('../views/setting/UserInfo.vue'),
             meta: {
               isAuth: true,
-              isKeepAlive:true
+              isKeepAlive: true
             },
           }
         ]

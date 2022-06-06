@@ -25,6 +25,19 @@ export const routeInfo = [
     },
     {
         id: 3,
+        name: "ControlIndex",
+        title: "智慧交管",
+        className: "el-icon-setting",
+        children: [
+            {
+                name: "ControlTraffic",
+                title: "交通管理",
+                path: "/control/traffic"
+            }
+        ]
+    },
+    {
+        id: 4,
         name: "SettingIndex",
         title: "系统设置",
         className: "el-icon-setting",
@@ -36,4 +49,5 @@ export const routeInfo = [
             }
         ]
     },
+    
 ]
