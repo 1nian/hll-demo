@@ -58,27 +58,31 @@ export default {
     };
   },
   created() {
-    this.$store.commit(
-      "setUserInfo",
-      JSON.parse(sessionStorage.getItem("userInfo"))
-    );
-    this.$store.commit("setTtoken", sessionStorage.getItem("token"));
-    this.$store.commit("setRouterName", sessionStorage.getItem("routerName"));
-    this.$store.commit(
-      "setIsSecond",
-      JSON.parse(sessionStorage.getItem("isSecond"))
-    );
-    this.$store.commit("setRouterName", sessionStorage.getItem("routerName"));
-    this.$store.commit("setAsideWidth", sessionStorage.getItem("asideWidth"));
-    this.$store.commit(
-      "setRouterSecondData",
-      JSON.parse(sessionStorage.getItem("routerSecondData"))
-    );
-
-    this.navData = routeInfo;
-    this.asideWidth = this.$store.state.asideWidth;
+    this.setInit();
   },
   methods: {
+    setInit(){
+      // 页面刷新时获取用户信息和当前页面状态
+      this.$store.commit(
+        "setUserInfo",
+        JSON.parse(sessionStorage.getItem("userInfo"))
+      );
+      this.$store.commit("setTtoken", sessionStorage.getItem("token"));
+      this.$store.commit("setRouterName", sessionStorage.getItem("routerName"));
+      this.$store.commit(
+        "setIsSecond",
+        JSON.parse(sessionStorage.getItem("isSecond"))
+      );
+      this.$store.commit("setRouterName", sessionStorage.getItem("routerName"));
+      this.$store.commit("setAsideWidth", sessionStorage.getItem("asideWidth"));
+      this.$store.commit(
+        "setRouterSecondData",
+        JSON.parse(sessionStorage.getItem("routerSecondData"))
+      );
+
+      this.navData = routeInfo;
+      this.asideWidth = this.$store.state.asideWidth;
+    },
     handleCommand(item) {
       switch (item) {
         case "layout":

@@ -22,7 +22,8 @@ const routes = [
     redirect: "/index",
     component: () => import('../views/HomeView.vue'),
     meta: {
-      isAuth: true
+      isAuth: true,
+      isKeepAlive:false
     },
     children: [
       {
@@ -30,7 +31,8 @@ const routes = [
         name: 'IndexView',
         component: () => import('../views/IndexView.vue'),
         meta: {
-          isAuth: true
+          isAuth: true,
+          isKeepAlive:false
         }
       },
       {
@@ -38,7 +40,8 @@ const routes = [
         name: 'InfoView',
         component: () => import('../views/InfoView.vue'),
         meta: {
-          isAuth: true
+          isAuth: true,
+          isKeepAlive:false
         }
       },
       {
@@ -47,7 +50,8 @@ const routes = [
         redirect: '/security/equipment',
         component: () => import('../views/security/Index.vue'),
         meta: {
-          isAuth: true
+          isAuth: true,
+          isKeepAlive:true
         },
         children: [
           {
@@ -55,7 +59,8 @@ const routes = [
             name: 'SecurityEquipment',
             component: () => import('../views/security/Equipment.vue'),
             meta: {
-              isAuth: true
+              isAuth: true,
+              isKeepAlive:true
             },
           },
           {
@@ -63,7 +68,8 @@ const routes = [
             name: "SecurityBlackList",
             component: () => import('../views/security/BlackList.vue'),
             meta: {
-              isAuth: true
+              isAuth: true,
+              isKeepAlive:true
             },
           },
         ]
@@ -74,7 +80,8 @@ const routes = [
         redirect: '/setting/info',
         component: () => import('../views/setting/Index.vue'),
         meta: {
-          isAuth: true
+          isAuth: true,
+          isKeepAlive:true
         },
         children:[
           {
@@ -82,7 +89,8 @@ const routes = [
             name:"UserInfo",
             component: () => import('../views/setting/UserInfo.vue'),
             meta: {
-              isAuth: true
+              isAuth: true,
+              isKeepAlive:true
             },
           }
         ]

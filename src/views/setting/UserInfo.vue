@@ -26,7 +26,7 @@
         <el-input v-model="ruleForm.cname"></el-input>
       </el-form-item>
       <el-form-item label="角色" prop="role">
-        <el-select v-model="ruleForm.role" disabled placeholder="请选择角色">
+        <el-select v-model="ruleForm.role" placeholder="请选择角色">
           <el-option label="上海" value="shanghai"></el-option>
           <el-option label="北京" value="beijing"></el-option>
         </el-select>
@@ -70,7 +70,16 @@ export default {
       },
     };
   },
+  mounted() {
+    this.getUserInfo();
+  },
   methods: {
+    getUserInfo() {
+      this.$store.commit(
+        "setUserInfo",
+        JSON.parse(sessionStorage.getItem("userInfo"))
+      );
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
@@ -84,12 +93,14 @@ export default {
           };
 
           // 存储用户信息
-          sessionStorage.setItem('userInfo',JSON.stringify(userInfo));
+          sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
 
           this.$message({
             message: "用户信息已经保存成功",
             type: "success",
           });
+
+          this.getUserInfo();
         } else {
           console.log("error submit!!");
           return false;
