@@ -101,19 +101,7 @@ export default {
       this.asideWidth = item;
     },
     goToUserInfo() {
-      let parpams = {
-        id: 3,
-        name: "SettingIndex",
-        title: "系统设置",
-        className: "el-icon-setting",
-        children: [
-          {
-            name: "UserInfo",
-            title: "个人中心",
-            path: "/setting/info",
-          },
-        ],
-      };
+      let parpams = this.navData.find(item => item.id === 3);
       this.$refs.navComponent.changeNav(parpams);
     },
   },
