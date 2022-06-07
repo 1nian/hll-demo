@@ -20,10 +20,9 @@
     <hll-dialog
       :isDialog="isDialog"
       title="详情查看"
-      :titleData="titleData"
-      :item="TableItem"
-      :dialogInfo="dialogInfo"
       @closeDialog="closeDialog"
+      :templateData="titleData"
+      :templateInfo="tableItem"
     ></hll-dialog>
   </div>
 </template>
@@ -54,8 +53,7 @@ export default {
       pageSize: 10,
       total: 0,
       isDialog: false,
-      TableItem: {},
-      dialogInfo: "",
+      tableItem: {},
     };
   },
   computed: {
@@ -104,30 +102,7 @@ export default {
 
     getDtaItem(item) {
       this.isDialog = true;
-      this.TableItem = item;
-
-      let dialogHtml = `
-        <el-row class="el-row">
-          <el-col class="el-col el-col-12"><div class="grid-content bg-purple-dark">违规信息</div></el-col>
-        </el-row>
-        <el-row class="el-row">
-          <el-col class="el-col el-col-12"><div class="grid-content bg-purple">车牌号码</div></el-col>
-          <el-col class="el-col el-col-12"><div class="grid-content bg-purple-light">${item.name}</div></el-col>
-        </el-row>
-        <el-row class="el-row">
-          <el-col class="el-col el-col-12"><div class="grid-content bg-purple">违规时间</div></el-col>
-          <el-col class="el-col el-col-12"><div class="grid-content bg-purple-light">${item.date}</div></el-col>
-        </el-row>
-        <el-row class="el-row">
-          <el-col class="el-col el-col-12"><div class="grid-content bg-purple">违规地点</div></el-col>
-          <el-col class="el-col el-col-12"><div class="grid-content bg-purple-light">${item.address}</div></el-col>
-        </el-row>
-        <el-row class="el-row">
-          <el-col class="el-col el-col-12"iv class="grid-content bg-purple">图片</div></el-col>
-          <el-col class="el-col el-col-12"iv class="grid-content bg-purple-light"><img src="${item.img}"></div></el-col>
-        </el-row>
-      `;
-      this.dialogInfo = dialogHtml;
+      this.tableItem = item;
     },
     closeDialog() {
       this.isDialog = false;

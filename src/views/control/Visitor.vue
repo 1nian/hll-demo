@@ -8,7 +8,7 @@
       :optionSelect="optionSelect"
     ></hll-search>
     <hll-table
-      :titleData="titleData"
+      :titleData="filterTitleData"
       :tableData="filterTableData"
       :currentPage="currentPage"
       :pageSize="pageSize"
@@ -22,7 +22,14 @@
       @seeDtaItem="getDataItem"
     ></hll-table>
 
-    <hll-dialog :item="tableItem" :isDialog="isDialog" @closeDialog="closeDialog"></hll-dialog>
+    <hll-dialog
+      :item="tableItem"
+      :isDialog="isDialog"
+      :dialogInfo="dialogInfo"
+      @closeDialog="closeDialog"
+      :templateData="filterTitleData"
+      :templateInfo="tableItem"
+    ></hll-dialog>
   </div>
 </template>
 
@@ -36,7 +43,7 @@ export default {
   components: {
     HllTable,
     HllSearch,
-    HllDialog
+    HllDialog,
   },
   data() {
     return {
@@ -47,19 +54,20 @@ export default {
         { label: "离开", prop: "离开" },
       ],
       titleData: [
-        { label: "访客姓名", prop: "visitorName" },
-        // { label: "图片", prop: "img" },
-        { label: "是否自驾", prop: "isDriving" },
-        { label: "访客电话", prop: "visitorPhone" },
-        { label: "进出入状态", prop: "status" },
-        { label: "被访人姓名", prop: "spinsterName" },
-        { label: "通行时间", prop: "date" },
+        { label: "访客姓名", prop: "visitorName", isShow: true },
+        { label: "图片", prop: "img", isShow: false },
+        { label: "是否自驾", prop: "isDriving", isShow: true },
+        { label: "访客电话", prop: "visitorPhone", isShow: true },
+        { label: "进出入状态", prop: "status", isShow: true },
+        { label: "被访人姓名", prop: "spinsterName", isShow: true },
+        { label: "通行时间", prop: "date", isShow: true },
       ],
       currentPage: 1,
       pageSize: 10,
       total: 0,
-      tableItem:{},
-      isDialog:false
+      tableItem: {},
+      isDialog: false,
+      dialogInfo: "",
     };
   },
   computed: {
@@ -69,6 +77,10 @@ export default {
         (this.currentPage - 1) * this.pageSize,
         this.pageSize * this.currentPage
       );
+    },
+    filterTitleData() {
+      let data = this.titleData.filter((item) => item.isShow === true);
+      return data;
     },
   },
   activated() {
@@ -87,7 +99,7 @@ export default {
       }
     },
     getSizeChange(val) {
-      if(this.total >= val){
+      if (this.total >= val) {
         this.pageSize = val;
         this.currentPage = 1;
       }
@@ -109,8 +121,8 @@ export default {
         );
 
         if (params.valueDate != null) {
-          datetData = selectData.filter((data) =>
-            new Date(data.date) === new Date(params.valueDate)
+          datetData = selectData.filter(
+            (data) => new Date(data.date) === new Date(params.valueDate)
           );
         }
 
@@ -130,14 +142,14 @@ export default {
       }
     },
 
-    getDataItem(item){
+    getDataItem(item) {
       this.tableItem = item;
       this.isDialog = true;
     },
 
-    closeDialog(){
+    closeDialog() {
       this.isDialog = false;
-    }
+    },
   },
 };
 </script>

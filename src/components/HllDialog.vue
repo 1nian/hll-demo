@@ -7,7 +7,23 @@
       :before-close="handleClose"
       :close-on-click-modal="false"
     >
-      <div v-html="dialogInfo"></div>
+      <div>
+        <el-row
+          :gutter="24"
+          v-for="(item, index) in templateData"
+          :key="index"
+          :templateInfo="templateInfo"
+        >
+          <el-col :span="8">
+            <div class="grid-content bg-purple text-rigth">{{ item.label }}</div>
+          </el-col>
+          <el-col :span="16">
+            <div class="grid-content bg-purple-light text-left">
+              {{ templateInfo[item.prop] }}
+            </div>
+          </el-col>
+        </el-row>
+      </div>
       <span v-if="isButton" slot="footer" class="dialog-footer">
         <el-button @click="onCancel">取 消</el-button>
         <el-button type="primary" @click="onSure">确 定</el-button>
@@ -23,10 +39,6 @@ export default {
       type: String,
       default: "提示信息",
     },
-    titleData: {
-      type: Array,
-      default: () => [],
-    },
     isDialog: {
       type: Boolean,
       default: false,
@@ -35,19 +47,19 @@ export default {
       type: Boolean,
       default: false,
     },
-    item: {
-      type: Object,
+    templateData: {
+      type: Array,
+      default: () => [],
     },
-    dialogInfo: {
-      type: String,
-      default: "",
+    templateInfo: {
+      type: Object,
+      default: () => {},
     },
   },
-  computed:{
-    filterTitle(){
-      
-      return this.titleData
-    }
+  computed: {
+    filterTitle() {
+      return this.titleData;
+    },
   },
   methods: {
     handleClose(done) {
@@ -70,7 +82,13 @@ export default {
   background-color: rgb(245, 247, 253);
   text-align: left;
 }
-.el-row{
+.el-row {
   margin-bottom: 20px;
+}
+.text-rigth{
+  text-align: right;
+}
+.text-left{
+  text-align: left;
 }
 </style>
