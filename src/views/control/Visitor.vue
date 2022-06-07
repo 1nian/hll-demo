@@ -23,9 +23,8 @@
     ></hll-table>
 
     <hll-dialog
-      :item="tableItem"
+      title="详情查看"
       :isDialog="isDialog"
-      :dialogInfo="dialogInfo"
       @closeDialog="closeDialog"
       :templateData="filterTitleData"
       :templateInfo="tableItem"
