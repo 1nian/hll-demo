@@ -1,6 +1,11 @@
 <template>
   <div class="hll-search">
-    <el-select class="hll-search-select" v-model="valueSelect" :placeholder="placeholderSelect" v-if="isSelect">
+    <el-select
+      class="w160"
+      v-model="valueSelect"
+      :placeholder="placeholderSelect"
+      v-if="isSelect"
+    >
       <el-option
         v-for="(item, index) in optionSelect"
         :key="index"
@@ -9,6 +14,15 @@
       >
       </el-option>
     </el-select>
+    <el-date-picker
+      class="w160"
+      v-if="isDatePicker"
+      v-model="valueDate"
+      type="date"
+      value-format="yyyy-MM-dd"
+      placeholder="选择日期"
+    >
+    </el-date-picker>
     <el-input
       class="hll-search-input"
       v-model="valueInput"
@@ -35,7 +49,11 @@ export default {
       type: Boolean,
       default: false,
     },
-    placeholderSelect:{
+    isDatePicker: {
+      type: Boolean,
+      default: false,
+    },
+    placeholderSelect: {
       type: String,
       default: "选择文本框",
     },
@@ -47,25 +65,52 @@ export default {
   data() {
     return {
       valueInput: "",
-      valueSelect: this.optionSelect[0].label,
+      valueSelect:  this.defaultSelect(),
+      valueDate: this.defaultDatePicker(),
       isClear: false,
     };
   },
   methods: {
     serach() {
-      let params = {}
-      if (this.valueInput || this.valueSelect) {
+      let params = {};
+      if (this.valueInput || this.valueSelect || this.valueDate) {
         this.isClear = true;
-        params['valueInput'] = this.valueInput;
-        params['valueSelect'] = this.valueSelect;
+        params["valueInput"] = this.valueInput;
+        params["valueSelect"] = this.valueSelect;
+        params["valueDate"] = this.valueDate;
         this.$emit("searchData", params);
       }
     },
     clear() {
-      this.valueInput = "";
-      this.valueSelect = this.optionSelect[0].label,
+      this.valueInput = null;
+      this.valueSelect = this.defaultSelect();
+      this.valueDate = this.defaultDatePicker();
       this.isClear = false;
-      this.$emit("searchData", null);
+      let params = {
+        valueInput: this.valueInput,
+        valueSelect :this.valueSelect,
+        valueDate : this.valueDate,
+      };
+      this.$emit("searchData", params);
+    },
+
+    defaultSelect(){
+      if(this.optionSelect.length && this.optionSelect.length > 0){
+        return this.optionSelect[0].label
+      }else{
+        return null
+      }
+    },
+    
+    // 设置默认日期为当天
+    defaultDatePicker() {
+      let date = new Date();
+      var y = date.getFullYear();
+      var m = date.getMonth() + 1;
+      m = m < 10 ? "0" + m : m;
+      var d = date.getDate();
+      d = d < 10 ? "0" + d : d;
+      return y + '-' + m + '-' + d
     },
   },
 };
@@ -82,7 +127,7 @@ export default {
 .hll-search-button {
   width: 88px;
 }
-.hll-search-select{
+.hll-search .w160 {
   width: 160px;
   margin-right: 10px;
 }

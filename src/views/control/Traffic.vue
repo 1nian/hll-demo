@@ -86,12 +86,12 @@ export default {
     getCurrentChange(val) {
       this.currentPage = val;
     },
-    queryTableData(item) {
+    queryTableData(params) {
       let data = JSON.parse(JSON.stringify(this.alwaysData));
 
-      if (item) {
+      if (params.valueInput != null) {
         this.tableData = data.filter((data) =>
-          data.name.toLowerCase().includes(item.toLowerCase())
+          data.name.toLowerCase().includes(params.valueInput.toLowerCase())
         );
         this.total = this.tableData.length;
       } else {

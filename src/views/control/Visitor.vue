@@ -1,6 +1,6 @@
 <template>
   <div>
-    <hll-search :isSelect="true" :optionSelect="optionSelect" @searchData="getQuery"></hll-search>
+    <hll-search :isSelect="true" :isDatePicker="true" :optionSelect="optionSelect" @searchData="getQuery"></hll-search>
   </div>
 </template>
 
