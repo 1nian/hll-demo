@@ -1,22 +1,32 @@
 <template>
   <div class="hll-table">
-    <el-table :data="tableData" border style="width: 100%">
+    <el-table :data="tableData" border style="width: 100%" :default-sort="defaultSort">
+      <el-table-column v-if="isImg" label="图片" width="80px" align="center">
+        <template slot-scope="scope">
+          <div class="demo-image__preview">
+            <el-image 
+              style="width: 30px; height: 30px"
+              :src="url"
+              @click="clickImg(scope.row.img)" 
+              :preview-src-list="srcList">
+            </el-image>
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column
+        align="center"
         v-for="(item, index) in titleData"
         :key="index"
         :label="item.label"
         :prop="item.prop"
       >
-        <template slot-scope="scope">
-          {{ scope.row[scope.column.property] }}
-        </template>
       </el-table-column>
-      <el-table-column label="操作" v-if="isOperation">
+      <el-table-column label="操作" v-if="isOperation" align="center">
         <template slot-scope="scope">
-          <el-button v-if="isSee" type="text" @click="see(scope.row)"
+          <el-button :class="[{mr30:isEdit}]" v-if="isSee" type="text" @click="see(scope.row)"
             >查看</el-button
           >
-          <el-button v-if="isEdit" type="text" @click="edit(scope.row)"
+          <el-button :class="[{mr30:isDel}]" v-if="isEdit" type="text" @click="edit(scope.row)"
             >编辑</el-button
           >
           <el-button
@@ -79,6 +89,21 @@ export default {
       type: Boolean,
       default: true,
     },
+    // 列中是否展示图片是否出现
+    isImg: {
+      type: Boolean,
+      default: false,
+    },
+    // 列中是否展示图片是否出现
+    defaultSort: {
+      type: Object,
+      default: function(){
+        return {
+          prop:'date',
+          order:'descending'
+        }
+      },
+    },
 
     // 是否开启分页
     isPagination: {
@@ -107,6 +132,12 @@ export default {
       default: 100,
     },
   },
+  data(){
+    return {
+      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      srcList: []
+    }
+  },
   methods: {
     see(item) {
       // console.log(item);
@@ -125,6 +156,11 @@ export default {
     handleCurrentChange(val) {
       this.$emit("currentChange", val);
     },
+
+    clickImg(item){
+      this.srcList = []
+      this.srcList.push(item)
+    }
   },
 };
 </script>
@@ -147,6 +183,8 @@ export default {
 .el-button--text {
   color: #5473e8;
   font-size: 14px;
+}
+.mr30{
   margin-right: 30px;
 }
 .button-del {

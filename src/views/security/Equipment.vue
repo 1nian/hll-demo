@@ -61,8 +61,10 @@ export default {
       }
     },
     getSizeChange(val) {
-      this.pageSize = val;
-      this.currentPage = 1;
+      if(this.total >= val){
+        this.pageSize = val;
+        this.currentPage = 1;
+      }
     },
     getCurrentChange(val) {
       this.currentPage = val;
