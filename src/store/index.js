@@ -12,6 +12,10 @@ export default new Vuex.Store({
     routerName: '',
     asideWidth: '',
     routerSecondData: [],
+
+
+    // 模拟数组数据的添加，修改，删除
+    mockData:[],
   },
   getters: {
   },
@@ -38,6 +42,10 @@ export default new Vuex.Store({
 
     setRouterSecondData(state, routerSecondData) {
       state.routerSecondData = routerSecondData
+    },
+
+    setMockData(state, mockData) {
+      state.mockData = mockData
     },
   },
   actions: {

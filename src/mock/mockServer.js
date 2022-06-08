@@ -57,7 +57,7 @@ Mock.mock('http://localhost:8080/catList', {
 Mock.mock('http://localhost:8080/visitorList', {
     'code': 200,
     data: {
-        'data|100': [
+        'data|10': [
             {
                 id: '@id',
                 visitorName: '@cname',

@@ -2,9 +2,11 @@
   <div class="security-equipment">
     <hll-search
       @searchData="queryTableData"
+      @addTableData="operationalTableData"
       placeholder="请输入访客姓名"
       :isSelect="true"
       :isDatePicker="true"
+      :isAdd="true"
       :optionSelect="optionSelect"
     ></hll-search>
     <hll-table
@@ -13,21 +15,28 @@
       :currentPage="currentPage"
       :pageSize="pageSize"
       :total="total"
-      :isImg="true"
+      :isImg="false"
       :isOperation="true"
-      :isEdit="false"
-      :isDel="false"
+      :isEdit="true"
+      :isDel="true"
       @sizeChange="getSizeChange"
       @currentChange="getCurrentChange"
       @seeDtaItem="getDataItem"
+      @editDataItem="operationalTableData"
+      @delDataItem="delDataItem"
     ></hll-table>
 
     <hll-dialog
-      title="详情查看"
+      :title="title"
       :isDialog="isDialog"
+      :isSeeDetails="isSeeDetails"
+      :isOperationalData="isOperationalData"
       @closeDialog="closeDialog"
+      @info="updateInfo"
       :templateData="filterTitleData"
       :templateInfo="tableItem"
+      :isButton="isButton"
+      ref="hllDialog"
     ></hll-dialog>
   </div>
 </template>
@@ -66,12 +75,16 @@ export default {
       total: 0,
       tableItem: {},
       isDialog: false,
+      isSeeDetails: false,
+      isOperationalData: false,
+      isButton: false,
       dialogInfo: "",
+      title: "",
     };
   },
   computed: {
     filterTableData() {
-      let data = this.tableData;
+      let data = this.$store.state.mockData;
       return data.slice(
         (this.currentPage - 1) * this.pageSize,
         this.pageSize * this.currentPage
@@ -83,7 +96,15 @@ export default {
     },
   },
   activated() {
-    this.getTableData();
+    let mockData = JSON.parse(sessionStorage.getItem("mockData"));
+    if (mockData.length > 0) {
+      this.$store.commit("setMockData", mockData);
+      // this.tableData = mockData;
+      this.alwaysData = this.$store.state.mockData;
+      this.total = this.$store.state.mockData.length;
+    } else {
+      this.getTableData();
+    }
   },
   methods: {
     async getTableData() {
@@ -92,6 +113,8 @@ export default {
         (a, b) => new Date(a.date) - new Date(b.date)
       );
       if (res.data.code === 200) {
+        sessionStorage.setItem("mockData", JSON.stringify(sortData));
+
         this.tableData = sortData;
         this.alwaysData = sortData;
         this.total = sortData.length;
@@ -133,21 +156,82 @@ export default {
               .includes(params.valueInput.toLowerCase())
           );
 
-        this.tableData = resData;
+        this.$store.state.mockData = resData;
         this.total = resData.length;
       } else {
-        this.tableData = this.alwaysData;
+        this.$store.state.mockData = this.alwaysData;
         this.total = this.alwaysData.length;
       }
     },
 
+    // dialog 查看数据详情
     getDataItem(item) {
       this.tableItem = item;
       this.isDialog = true;
+      this.isSeeDetails = true;
+      this.isOperationalData = false;
+      this.isButton = false;
+      this.title = "详情查看";
     },
 
     closeDialog() {
       this.isDialog = false;
+    },
+
+    // dialog 操作表格数据
+    operationalTableData(item) {
+      this.isDialog = true;
+      this.isOperationalData = true;
+      this.isButton = true;
+      this.isSeeDetails = false;
+      this.title = item ? "编辑" : "添加";
+      this.tableItem = item ? item : {};
+
+      this.$refs.hllDialog.filterTableInfo(this.tableItem.id);
+    },
+
+    // 更新表格数据
+    updateInfo(item) {
+      let data = this.$store.state.mockData;
+      if (item.id) {
+        let index = data.findIndex((i) => i.id === item.id);
+        data.splice(index, 1, item);
+      } else {
+        let id = new Date().getTime();
+        item["id"] = id;
+        let params = Object.assign({}, item);
+        data.push(params);
+      }
+      this.total = data.length;
+      this.alwaysData = data;
+
+      this.closeDialog();
+    },
+
+    // 删除表格数据
+    delDataItem(item) {
+      let data = this.$store.state.mockData;
+      let index = data.findIndex((i) => i.id === item.id);
+      this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          data.splice(index,1);
+          this.total = data.length;
+          this.alwaysData = data;
+          this.$message({
+            type: "success",
+            message: "删除成功!",
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
     },
   },
 };

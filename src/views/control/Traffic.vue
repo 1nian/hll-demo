@@ -23,6 +23,7 @@
       @closeDialog="closeDialog"
       :templateData="titleData"
       :templateInfo="tableItem"
+      :isSeeDetails="isSeeDetails"
     ></hll-dialog>
   </div>
 </template>
@@ -53,6 +54,7 @@ export default {
       pageSize: 10,
       total: 0,
       isDialog: false,
+      isSeeDetails: false,
       tableItem: {},
     };
   },
@@ -103,6 +105,7 @@ export default {
     getDtaItem(item) {
       this.isDialog = true;
       this.tableItem = item;
+      this.isSeeDetails = true;
     },
     closeDialog() {
       this.isDialog = false;

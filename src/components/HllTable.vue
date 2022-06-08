@@ -144,10 +144,10 @@ export default {
       this.$emit('seeDtaItem',item)
     },
     edit(item) {
-      console.log(item);
+      this.$emit('editDataItem',item);
     },
     del(item) {
-      console.log(item);
+      this.$emit('delDataItem',item);
     },
 
     handleSizeChange(val) {
