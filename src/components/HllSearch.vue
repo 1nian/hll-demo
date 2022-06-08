@@ -32,12 +32,15 @@
       <el-button class="hll-el-button hll-search-button" @click="serach"
         >搜索</el-button
       >
-      <el-button v-show="isClear" class="hll-search-button" @click="clear"
+      <el-button v-show="isReset" class="hll-search-button" @click="reset"
         >重置</el-button
       >
     </div>
     <div>
-      <el-button v-if="isAdd" class="hll-el-button hll-search-button" @click="add"
+      <el-button
+        v-if="isAdd"
+        class="hll-el-button hll-search-button"
+        @click="add"
         >添加</el-button
       >
     </div>
@@ -78,30 +81,34 @@ export default {
       valueInput: "",
       valueSelect: this.defaultSelect(),
       valueDate: this.defaultDatePicker(),
-      isClear: false,
+      isReset: false,
     };
   },
   methods: {
     serach() {
       let params = {};
-      if (this.valueInput || this.valueSelect || this.valueDate) {
-        this.isClear = true;
-        params["valueInput"] = this.valueInput;
+      this.isReset = true;
+      if (this.isSelect) {
         params["valueSelect"] = this.valueSelect;
-        params["valueDate"] = this.valueDate;
-        this.$emit("searchData", params);
       }
+      if (this.isDatePicker) {
+        params["valueDate"] = this.valueDate;
+      }
+      params["valueInput"] = this.valueInput;
+      params["status"] = "search";
+      this.$emit("searchData", params);
     },
-    clear() {
-      this.valueInput = null;
-      this.valueSelect = this.defaultSelect();
-      this.valueDate = this.defaultDatePicker();
-      this.isClear = false;
-      let params = {
-        valueInput: this.valueInput,
-        valueSelect: this.valueSelect,
-        valueDate: this.valueDate,
-      };
+    reset() {
+      let params = { status: "reset" };
+      this.valueInput = "";
+      if (this.isSelect) {
+        this.valueSelect = this.defaultSelect();
+      }
+      if (this.isDatePicker) {
+        this.valueDate = this.defaultDatePicker();
+      }
+
+      this.isReset = false;
       this.$emit("searchData", params);
     },
 
@@ -124,9 +131,9 @@ export default {
       return y + "-" + m + "-" + d;
     },
 
-    add(){
-      this.$emit('addTableData')
-    }
+    add() {
+      this.$emit("addTableData");
+    },
   },
 };
 </script>

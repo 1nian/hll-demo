@@ -72,7 +72,7 @@ Mock.mock('http://localhost:8080/visitorList', {
                     "离开",
                 ],
                 spinsterName: '@cname',
-                date: '@datetime',
+                date: '@date',
             }
         ]
     }

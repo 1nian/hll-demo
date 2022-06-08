@@ -51,8 +51,8 @@
             <el-date-picker
               class="w160"
               v-model="tableInfo.date"
-              type="datetime"
-              value-format="yyyy-MM-dd HH-mm-ss"
+              type="date"
+              value-format="yyyy-MM-dd"
               placeholder="选择日期"
             >
             </el-date-picker>
@@ -159,13 +159,15 @@ export default {
       m = m < 10 ? "0" + m : m;
       var d = date.getDate();
       d = d < 10 ? "0" + d : d;
-      var H = date.getHours();
-      H = H < 10 ? "0" + H : H;
-      var h = date.getMinutes();
-      h = h < 10 ? "0" + h : h;
-      var s = date.getSeconds();
-      s = s < 10 ? "0" + s : s;
-      return`${y}-${m}-${d} ${H}:${h}:${s}`;
+
+      // 时分秒
+      // var H = date.getHours();
+      // H = H < 10 ? "0" + H : H;
+      // var h = date.getMinutes();
+      // h = h < 10 ? "0" + h : h;
+      // var s = date.getSeconds();
+      // s = s < 10 ? "0" + s : s;
+      return`${y}-${m}-${d}`;
     },
   },
 };

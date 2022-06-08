@@ -96,11 +96,9 @@ export default {
     },
   },
   activated() {
-    let mockData = JSON.parse(sessionStorage.getItem("mockData"));
-    if (mockData.length > 0) {
-      this.$store.commit("setMockData", mockData);
-      // this.tableData = mockData;
-      this.alwaysData = this.$store.state.mockData;
+    this.alwaysData = JSON.parse(sessionStorage.getItem("mockData"));
+    if (this.alwaysData) {
+      this.$store.commit("setMockData", this.alwaysData);
       this.total = this.$store.state.mockData.length;
     } else {
       this.getTableData();
@@ -132,36 +130,20 @@ export default {
 
     // 筛选表格数据
     queryTableData(params) {
-      let data = JSON.parse(JSON.stringify(this.alwaysData));
-      let selectData,
-        datetData,
-        resData = [];
-
-      if (params.valueInput != null) {
-        selectData = data.filter((data) =>
-          data.status.toLowerCase().includes(params.valueSelect.toLowerCase())
-        );
-
-        if (params.valueDate != null) {
-          datetData = selectData.filter(
-            (data) => new Date(data.date) === new Date(params.valueDate)
-          );
-        }
-
-        resData =
-          datetData ||
-          selectData.filter((data) =>
-            data.visitorName
-              .toLowerCase()
-              .includes(params.valueInput.toLowerCase())
-          );
-
-        this.$store.state.mockData = resData;
-        this.total = resData.length;
-      } else {
-        this.$store.state.mockData = this.alwaysData;
-        this.total = this.alwaysData.length;
+      let goobleData = JSON.parse(JSON.stringify(this.alwaysData));
+      if(params.status === 'search'){
+        let data = goobleData.filter(item => {
+          return item.status === params.valueSelect && item.visitorName === params.valueInput && item.date === params.valueDate
+        });
+        this.$store.state.mockData = data;
+        this.total = data.length;
       }
+
+      if(params.status === 'reset'){
+        this.$store.state.mockData = goobleData;
+        this.total = goobleData.length;
+      }
+     
     },
 
     // dialog 查看数据详情
@@ -218,7 +200,7 @@ export default {
         type: "warning",
       })
         .then(() => {
-          data.splice(index,1);
+          data.splice(index, 1);
           this.total = data.length;
           this.alwaysData = data;
           this.$message({
