@@ -1,12 +1,17 @@
 <template>
-  <el-tabs v-model="activeName" class="index-view" style="background: #f3f4f7;padding-left:10px">
-    <el-tab-pane
-      v-for="(item, index) in tabs"
-      :key="index"
-      :label="item.label"
-      :name="item.name"
-    >
-      <component :is="componentName"></component>
+  <el-tabs
+    v-model="activeName"
+    class="index-view"
+    style="background: #f3f4f7; padding-left: 10px"
+  >
+    <el-tab-pane label="业务分析" name="first">
+      <tab-business></tab-business>
+    </el-tab-pane>
+    <el-tab-pane label="数据分析" name="second">
+      <tab-data></tab-data>
+    </el-tab-pane>
+    <el-tab-pane label="平台运维" name="third">
+      <tab-operation></tab-operation>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -19,30 +24,13 @@ export default {
   name: "IndexView",
   data() {
     return {
-      tabs: [
-        { id: 1, label: "业务分析", name: "first" },
-        { id: 2, label: "数据分析", name: "second" },
-        { id: 3, label: "平台运维", name: "third" },
-      ],
       activeName: "third",
-      components: [
-        {id:1,name:'Business'},
-        {id:2,name:'Data'},
-        {id:3,name:'Operation'},
-      ],
     };
   },
   components: {
     TabBusiness,
     TabData,
     TabOperation,
-  },
-  computed: {
-    componentName() {
-      let tabInfo = this.tabs.find((item) => item.name === this.activeName);
-      let componentInfo = this.components.find(item => item.id === tabInfo.id)
-      return 'tab-' + componentInfo.name.toLowerCase()
-    },
   },
 };
 </script>
@@ -55,7 +43,7 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
 }
-.index-view .el-tabs__nav-scroll{
+.index-view .el-tabs__nav-scroll {
   background: #ffffff;
   padding: 0 10px 10px;
   box-sizing: border-box;

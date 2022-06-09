@@ -1,87 +1,58 @@
 <template>
   <el-col :span="12">
-    <div :id="idName"></div>
+    <div class="item-card">
+      <div id="container"></div>
+    </div>
   </el-col>
 </template>
 
 <script>
 import { Chart } from "@antv/g2";
-
+const data = [
+  { year: "1951 年", sales: 38 },
+  { year: "1952 年", sales: 52 },
+  { year: "1956 年", sales: 61 },
+  { year: "1957 年", sales: 145 },
+  { year: "1958 年", sales: 48 },
+  { year: "1959 年", sales: 38 },
+  { year: "1960 年", sales: 38 },
+  { year: "1962 年", sales: 38 },
+];
 export default {
-  props: {
-    idName: {
-      type: String,
-      default: "g2",
-    },
-    data: {
-      type: Array,
-      require: true,
-      default: () => [
-        { genre: "Sports--1", sold: 111 },
-        { genre: "Strategy--1", sold: 92 },
-        { genre: "Action--1", sold: 133 },
-        { genre: "Shooter--1", sold: 144 },
-        { genre: "Other--1", sold: 155 },
-      ],
-    },
-    width: {
-      type: Number,
-      default: 300,
-    },
-    height: {
-      type: Number,
-      default: 300,
-    },
+  name: "TabLine",
+  data() {
+    return {};
   },
-  watch: {
-    data() {
-      this.changeInitChart();
-    },
-  },
+
+  components: {},
+
+  computed: {},
   mounted() {
-    this.initChart();
+    this.init();
   },
   methods: {
-    initChart() {
-      let that = this;
-
-      // Step 1: 创建 Chart 对象
+    init() {
       this.chart = new Chart({
-        container: that.idName, // 指定图表容器 ID
-        width: that.width, // 指定图表宽度
-        height: that.height, // 指定图表高度
+        container: "container",
+        autoFit: true,
+        height: 200,
       });
 
-      // Step 2: 载入数据源
-
-      this.chart.data(that.data);
-
-      // Step 3: 创建图形语法，绘制图形
-      this.chart
-        .area()
-        .position("genre*sold")
-        .shape("smooth")
-        .color("rgb(26 101 122)");
-      this.chart
-        .line()
-        .position("genre*sold")
-        .shape("smooth")
-        .color("rgb(26 101 122)");
+      this.chart.data(data);
+      this.chart.scale("sales", {
+        nice: true,
+      });
 
       this.chart.tooltip({
-        showCrosshairs: true,
-        line: { style: { fill: "red" } },
+        showMarkers: false,
       });
+      this.chart.interaction("active-region");
 
-      // Step 4: 渲染图表
+      this.chart.interval().position("year*sales");
       this.chart.render();
-    },
-    changeInitChart() {
-      this.chart.changeData(this.data);
     },
   },
 };
 </script>
-
 <style>
 </style>

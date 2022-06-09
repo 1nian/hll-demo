@@ -2,7 +2,7 @@
   <div>
     <el-row :gutter="20">
       <header-left :data="data" @setting="setting"></header-left>
-      <tab-line></tab-line>
+      <tab-line ref="tabLine" style="height: 240px"></tab-line>
     </el-row>
   </div>
 </template>
@@ -46,6 +46,8 @@ export default {
   },
 
   computed: {},
+
+  mounted() {},
 
   methods: {
     setting() {
