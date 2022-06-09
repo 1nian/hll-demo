@@ -8,48 +8,71 @@
 
 <script>
 import { Chart } from "@antv/g2";
-const data = [
-  { year: "1951 年", sales: 38 },
-  { year: "1952 年", sales: 52 },
-  { year: "1956 年", sales: 61 },
-  { year: "1957 年", sales: 145 },
-  { year: "1958 年", sales: 48 },
-  { year: "1959 年", sales: 38 },
-  { year: "1960 年", sales: 38 },
-  { year: "1962 年", sales: 38 },
-];
+
 export default {
   name: "TabLine",
   data() {
     return {};
   },
+  props: {
+    data: {
+      type: Array,
+      default: () => [],
+    },
+  },
 
   components: {},
 
-  computed: {},
+  watch: {
+    data() {
+      this.changeInitChart();
+    },
+  },
   mounted() {
-    this.init();
+    this.InitChart();
   },
   methods: {
-    init() {
+    InitChart() {
       this.chart = new Chart({
         container: "container",
         autoFit: true,
         height: 200,
       });
 
-      this.chart.data(data);
-      this.chart.scale("sales", {
-        nice: true,
-      });
+      this.chart.data(this.data);
+      
 
       this.chart.tooltip({
-        showMarkers: false,
+        showCrosshairs: false,
+        shared: true,
       });
-      this.chart.interaction("active-region");
 
-      this.chart.interval().position("year*sales");
+      this.chart
+        .line()
+        .position("date*数据调取")
+        .shape("smooth", "circle")
+        .color("rgb(84, 115, 232)");
+      this.chart
+        .area()
+        .position("date*数据调取")
+        .shape("smooth", "circle")
+        .color("rgb(84, 115, 232)");
+      this.chart
+        .line()
+        .position("date*数据推送")
+        .shape("smooth", "circle")
+        .color("rgb(35, 188, 202)");
+      this.chart
+        .area()
+        .position("date*数据推送")
+        .shape("smooth", "circle")
+        .color("rgb(35, 188, 202)");
+
+      this.chart.interaction("active-region");
       this.chart.render();
+    },
+    changeInitChart() {
+      this.chart.changeData(this.data);
     },
   },
 };

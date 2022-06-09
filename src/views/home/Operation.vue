@@ -2,7 +2,7 @@
   <div>
     <el-row :gutter="20">
       <header-left :data="data" @setting="setting"></header-left>
-      <tab-line ref="tabLine" style="height: 240px"></tab-line>
+      <tab-line :data="chartList" style="height: 240px"></tab-line>
     </el-row>
   </div>
 </template>
@@ -37,6 +37,7 @@ export default {
           icon: require("../../assets/index/icon-3.png"),
         },
       ],
+      chartList: [],
     };
   },
 
@@ -47,9 +48,23 @@ export default {
 
   computed: {},
 
-  mounted() {},
+  mounted() {
+    this.getChartList();
+  },
 
   methods: {
+    getChartList() {
+      this.chartList = [
+        {date:'05-01','数据调取':100,'数据推送':150},
+        {date:'05-06','数据调取':140,'数据推送':110},
+        {date:'05-11','数据调取':230,'数据推送':200},
+        {date:'05-16','数据调取':100,'数据推送':140},
+        {date:'05-21','数据调取':130,'数据推送':100},
+        {date:'05-26','数据调取':234,'数据推送':134},
+        {date:'05-31','数据调取':170,'数据推送':160},
+      ]
+    },
+
     setting() {
       console.log("1");
     },
