@@ -15,7 +15,7 @@
       :currentPage="currentPage"
       :pageSize="pageSize"
       :total="total"
-      :isImg="false"
+      :isImg="true"
       :isOperation="true"
       :isEdit="true"
       :isDel="true"
@@ -138,8 +138,8 @@ export default {
       }
 
       if(params.status === 'reset'){
-        this.$store.state.mockData = goobleData;
-        this.total = goobleData.length;
+        this.$store.state.mockData = this.alwaysData;
+        this.total = this.alwaysData.length;
       }
      
     },
@@ -190,7 +190,7 @@ export default {
 
     // 删除表格数据
     delDataItem(item) {
-      let data = this.$store.state.mockData;
+      let data = this.alwaysData;
       let index = data.findIndex((i) => i.id === item.id);
       this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
         confirmButtonText: "确定",
@@ -200,7 +200,7 @@ export default {
         .then(() => {
           data.splice(index, 1);
           this.total = data.length;
-          this.alwaysData = data;
+          this.$store.state.mockData = data;
           this.$message({
             type: "success",
             message: "删除成功!",

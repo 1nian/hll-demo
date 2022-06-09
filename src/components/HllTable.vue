@@ -3,14 +3,27 @@
     <el-table :data="tableData" border style="width: 100%" :default-sort="defaultSort">
       <el-table-column v-if="isImg" label="图片" width="80px" align="center">
         <template slot-scope="scope">
-          <div class="demo-image__preview">
+          
+          <!--  大图预览组件
+            <div class="demo-image__preview">
             <el-image 
               style="width: 30px; height: 30px"
               :src="url"
               @click="clickImg(scope.row.img)" 
               :preview-src-list="srcList">
             </el-image>
-          </div>
+          </div> -->
+
+          <!-- Popover 提示组件 -->
+          <el-popover
+            placement="top-start"
+            width="200"
+            trigger="hover"
+            effect="dark"
+            >
+            <div><img :src="scope.row.img" alt=""></div>
+            <img slot="reference" :src="url" alt="" style="width: 30px; height: 30px">
+          </el-popover>
         </template>
       </el-table-column>
       <el-table-column
