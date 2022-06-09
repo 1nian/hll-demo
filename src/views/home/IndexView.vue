@@ -1,5 +1,5 @@
 <template>
-  <el-tabs v-model="activeName" style="height: 200px">
+  <el-tabs v-model="activeName" class="index-view" style="background: #f3f4f7;padding-left:10px">
     <el-tab-pane
       v-for="(item, index) in tabs"
       :key="index"
@@ -54,5 +54,10 @@ export default {
   background-image: url("../..//assets/index-bg.png");
   background-repeat: no-repeat;
   background-size: cover;
+}
+.index-view .el-tabs__nav-scroll{
+  background: #ffffff;
+  padding: 0 10px 10px;
+  box-sizing: border-box;
 }
 </style>
