@@ -29,7 +29,7 @@ const routes = [
       {
         path: '/index',
         name: 'IndexView',
-        component: () => import('../views/IndexView.vue'),
+        component: () => import('../views/home/IndexView.vue'),
         meta: {
           isAuth: true,
           isKeepAlive: false

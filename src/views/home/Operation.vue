@@ -1,0 +1,23 @@
+<template>
+  <el-row :gutter="20">
+    <el-col :span="12"><div class="grid-content bg-purple"></div></el-col>
+    <el-col :span="12"><div class="grid-content bg-purple"></div></el-col>
+  </el-row>
+</template>
+
+<script>
+export default {
+  name: "TabOperation",
+  data() {
+    return {};
+  },
+
+  components: {},
+
+  computed: {},
+
+  methods: {},
+};
+</script>
+<style>
+</style>
