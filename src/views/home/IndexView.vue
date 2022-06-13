@@ -1,9 +1,5 @@
 <template>
-  <el-tabs
-    v-model="activeName"
-    class="index-view"
-    style="background: #f3f4f7; padding-left: 10px"
-  >
+  <el-tabs v-model="activeName" class="index-view" style="">
     <el-tab-pane label="业务分析" name="first">
       <tab-business></tab-business>
     </el-tab-pane>
@@ -42,6 +38,10 @@ export default {
   background-image: url("../..//assets/index-bg.png");
   background-repeat: no-repeat;
   background-size: cover;
+}
+.index-view {
+  background: #f3f4f7;
+  padding: 10px 10px 0;
 }
 .index-view .el-tabs__nav-scroll {
   background: #ffffff;

@@ -1,9 +1,5 @@
 <template>
-  <el-col :span="12">
-    <div class="item-card">
-      <div id="container"></div>
-    </div>
-  </el-col>
+  <div id="container"></div>
 </template>
 
 <script>
@@ -18,6 +14,12 @@ export default {
     data: {
       type: Array,
       default: () => [],
+    },
+    status1:{
+      type:String
+    },
+    status2:{
+      type:String
     },
   },
 
@@ -36,37 +38,62 @@ export default {
       this.chart = new Chart({
         container: "container",
         autoFit: true,
-        height: 200,
+        height: 170,
+        padding: [30, 20, 30, 30]
       });
 
+
       this.chart.data(this.data);
-      
 
       this.chart.tooltip({
-        showCrosshairs: false,
+        showCrosshairs: true,
         shared: true,
       });
 
+      this.chart.legend( {
+        position: "top",
+      });
+
+      this.chart.scale({
+        数据调取: {
+          min: 0,
+          max: 400,
+        },
+      });
+      this.chart.axis("数据推送", false);
+
+      this.chart.annotation().text({
+        content: "单位：次",
+         position: [0, 400],
+        style: {
+          fill: "#8c8c8c",
+          fontWeight: 300,
+        },
+        offsetY: -18,
+        offsetX: -88,
+      });
+
+
       this.chart
         .line()
         .position("date*数据调取")
-        .shape("smooth", "circle")
-        .color("rgb(84, 115, 232)");
+        .shape("smooth")
+        
       this.chart
         .area()
+        .adjust('stack')
         .position("date*数据调取")
-        .shape("smooth", "circle")
-        .color("rgb(84, 115, 232)");
+        .shape("smooth")
+
       this.chart
         .line()
         .position("date*数据推送")
-        .shape("smooth", "circle")
-        .color("rgb(35, 188, 202)");
+        .shape("smooth")
+        
       this.chart
         .area()
         .position("date*数据推送")
-        .shape("smooth", "circle")
-        .color("rgb(35, 188, 202)");
+        .shape("smooth")
 
       this.chart.interaction("active-region");
       this.chart.render();
