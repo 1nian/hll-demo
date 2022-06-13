@@ -3,7 +3,7 @@ import {
     Pagination, Input, Select, Button, Table, TableColumn, Form, FormItem, Icon, Container, Header, Aside, Main, Dropdown, Message, DropdownMenu,
     DropdownItem, Card, Tabs, TabPane, Option, Avatar, Dialog, Row, Col,DatePicker,Image,MessageBox,Popover
 } from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+import 'element-ui/lib/style/theme/index.css'
 
 Vue.prototype.$message = Message;
 Vue.prototype.$msgbox = MessageBox;

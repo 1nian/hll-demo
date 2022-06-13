@@ -29,7 +29,7 @@
         v-model="valueInput"
         :placeholder="placeholder"
       ></el-input>
-      <el-button class="hll-el-button hll-search-button" @click="serach"
+      <el-button class="hll-el-button hll-search-button" type="primary" @click="serach"
         >搜索</el-button
       >
       <el-button v-show="isReset" class="hll-search-button" @click="reset"

@@ -23,25 +23,4 @@ export default {
   margin: 0;
   padding: 0;
 }
-#app .hll-el-button {
-  border-color: #5473e8;
-  background:#5473E8;
-  color: #ffffff;
-}
-#app .el-input__inner:focus {
-  border-color: #5473e8;
-}
-#app .el-tabs__item.is-active{
-  color: #5473e8;
-}
-#app .el-tabs__active-bar{
-  background-color: #5473e8;
-}
-#app .el-tabs__item:hover{
-color: #5473e8;
-}
-
-#app .el-pager li:hover{
-  color: #5473e8;
-}
 </style>
