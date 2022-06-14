@@ -36,7 +36,7 @@
 
     <!-- 服务器运行情况 -->
     <div class="center">
-      <el-collapse v-model="activeServerNames" @change="handleChange">
+      <el-collapse v-model="activeServerNames" @change="handleChange('server')">
         <el-collapse-item name="1">
           <template slot="title">
             <el-row :gutter="20" style="width: 100%">
@@ -47,7 +47,7 @@
                 >服务器运行情况</el-col
               >
               <el-col :span="12" class="tr center-text"
-                >{{ statusLabel }} ({{serverData.length}})</el-col
+                >{{ serverLabel }} ({{serverData.length}})</el-col
               >
             </el-row>
           </template>
@@ -67,7 +67,7 @@
 
     <!-- 应用服务运行情况 -->
     <div class="center">
-      <el-collapse v-model="appServerNames" @change="handleChange">
+      <el-collapse v-model="appServerNames" @change="handleChange('app')">
         <el-collapse-item name="1">
           <template slot="title">
             <el-row :gutter="20" style="width: 100%">
@@ -78,7 +78,7 @@
                 >应用服务运行情况</el-col
               >
               <el-col :span="12" class="tr center-text"
-                >{{ statusLabel }} ({{appData.length}})</el-col
+                >{{ appLabel }} ({{appData.length}})</el-col
               >
             </el-row>
           </template>
@@ -93,7 +93,7 @@
 
     <!-- 数据对接厂商运行情况 -->
     <div class="center">
-      <el-collapse v-model="dataDockingNames" @change="handleChange">
+      <el-collapse v-model="dataDockingNames" @change="handleChange('docking')">
         <el-collapse-item name="1">
           <template slot="title">
             <el-row :gutter="20" style="width: 100%">
@@ -104,7 +104,7 @@
                 >数据对接厂商运行情况</el-col
               >
               <el-col :span="12" class="tr center-text"
-                >{{ statusLabel }} ({{dataDocking.length}})</el-col
+                >{{ dockingLabel }} ({{dataDocking.length}})</el-col
               >
             </el-row>
           </template>
@@ -167,7 +167,9 @@ export default {
       chartList: [],
       color: {},
       lineChange: "数据调取",
-      statusLabel: "收起",
+      serverLabel: "收起",
+      appLabel: "收起",
+      dockingLabel: "收起",
       serverData:[],
       appData:[],
       dataDocking:[],
@@ -245,9 +247,15 @@ export default {
 
     // 折叠面板展开与收起
     handleChange(val) {
-      val.length === 0
-        ? (this.statusLabel = "展开")
-        : (this.statusLabel = "收起");
+      if(val === 'server'){
+        this.serverLabel === "收起" ? this.serverLabel = "展开" : this.serverLabel = "收起"
+      }
+      if(val === 'app'){
+        this.appLabel === "收起" ? this.appLabel = "展开" : this.appLabel = "收起"
+      }
+      if(val === 'docking'){
+        this.dockingLabel === "收起" ? this.dockingLabel = "展开" : this.dockingLabel = "收起"
+      }
     },
 
     // 获取服务器运行情况数据
