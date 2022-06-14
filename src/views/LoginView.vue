@@ -42,7 +42,7 @@
           </el-form-item>
           <el-form-item>
             <el-button class="hll-el-button" @click="submitForm('loginForm')"
-              >立即创建</el-button
+              >登录</el-button
             >
           </el-form-item>
         </el-form>

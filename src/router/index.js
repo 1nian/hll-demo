@@ -145,6 +145,18 @@ const router = new VueRouter({
   routes,
 })
 
-
+// 简易权限验证
+router.beforeEach((to,from,next) => {
+  let token = sessionStorage.getItem('token');
+  if(to.meta.isAuth){
+    if(token){
+      next()
+    }else{
+      next({name:"login"})
+    }
+  }else{
+    next()
+  }
+})
 
 export default router
