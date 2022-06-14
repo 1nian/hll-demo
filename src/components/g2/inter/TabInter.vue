@@ -28,12 +28,6 @@ export default {
 
   components: {},
 
-  watch: {
-    data() {
-      // this.changeInitChart();
-    },
-  },
-
   mounted() {
     this.initChart();
   },
@@ -115,15 +109,7 @@ export default {
         this.color = "#5473e8";
       }
     },
-
-    changeInitChart() {
-      let data = this.data;
-      data.push({
-        item: "未使用",
-        percent: +((1 - data[0].percent) * 1).toFixed(2),
-      });
-      this.chart.changeData(data);
-    },
+    
   },
 };
 </script>

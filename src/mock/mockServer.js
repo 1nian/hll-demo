@@ -119,3 +119,50 @@ Mock.mock('http://localhost:8080/serverData', {
     },
     
 })
+
+
+
+// 首页，应用服务运行情况，数据生成
+
+Mock.mock('http://localhost:8080/appServiceData', {
+    'code': 200,
+    data: {
+        'data|5': [
+            {
+                'id|+1': 1,
+                "status|+1": [
+                    "可用",
+                    "不可用",
+                ],
+                "calls|1000-100000000": 1000000000,
+                "dataFlow|100-10000": 10000,
+                "errCalls|100-1000": 1000,
+                "rate|100-1000": 1000,
+            }
+        ]
+    },
+    
+})
+
+// 首页，数据厂商对接情况，数据生成
+
+Mock.mock('http://localhost:8080/dataDocking', {
+    'code': 200,
+    data: {
+        'data|5': [
+            {
+                'id|+1': 1,
+                "status|+1": [
+                    "可用",
+                    "不可用",
+                ],
+                "calls|1000-100000000": 1000000000,
+                "dataFlow|100-10000": 10000,
+                name:'@cname',
+                phone: Random.phone(),
+                dataDockingId: '@cword(012345ABCDEF,6)',
+            }
+        ]
+    },
+    
+})

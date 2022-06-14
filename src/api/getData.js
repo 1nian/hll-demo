@@ -6,3 +6,9 @@ export const getVisitorList = (params) => axios('/visitorList',params)
 
 // 首页，服务器运行情况，数据生成
 export const getServerData = (params) => axios('/serverData',params)
+
+// 首页，应用服务运行情况，数据生成
+export const getAppServiceData = (params) => axios('/appServiceData',params)
+
+// 首页，数据厂商对接情况，数据生成
+export const getDataDocking = (params) => axios('/dataDocking',params)

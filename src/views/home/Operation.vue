@@ -78,16 +78,13 @@
                 >应用服务运行情况</el-col
               >
               <el-col :span="12" class="tr center-text"
-                >{{ statusLabel }} (6)</el-col
+                >{{ statusLabel }} ({{appData.length}})</el-col
               >
             </el-row>
           </template>
           <div class="center-card">
-            <div class="center-card-item">
-              <app-serveice appTitle="智慧园区IOC运营中心"></app-serveice>
-            </div>
-            <div class="center-card-item">
-              <app-serveice appTitle="智慧园区IOC运营中心"></app-serveice>
+            <div class="center-card-item" v-for="app in appData" :key="'app'+ app.id">
+              <app-serveice appTitle="智慧园区IOC运营中心" :calls="app.calls" :dataFlow="app.dataFlow" :errCalls="app.errCalls" :rate="app.rate" :status="app.status"></app-serveice>
             </div>
           </div>
         </el-collapse-item>
@@ -107,15 +104,20 @@
                 >数据对接厂商运行情况</el-col
               >
               <el-col :span="12" class="tr center-text"
-                >{{ statusLabel }} (6)</el-col
+                >{{ statusLabel }} ({{dataDocking.length}})</el-col
               >
             </el-row>
           </template>
           <div class="center-card">
-            <div class="center-card-item">
+            <div class="center-card-item" v-for="docking in dataDocking" :key="'docking'+docking.id">
               <data-docking
                 dataDockingTitle="ROMA"
-                dataDockingId="0X001A"
+                :dataDockingId="docking.dataDockingId"
+                :status="docking.status"
+                :calls="docking.calls"
+                :dataFlow="docking.dataFlow"
+                :name="docking.name"
+                :phone="docking.phone"
               ></data-docking>
             </div>
           </div>
@@ -131,7 +133,7 @@ import HeaderLeft from "./operation/HeaderLeft.vue";
 import ServerOperation from "./operation/Server.vue";
 import AppServeice from "./operation/AppServeice.vue";
 import DataDocking from "./operation/DataDocking.vue";
-import { getServerData } from "../../api/getData";
+import { getServerData,getAppServiceData,getDataDocking } from "../../api/getData";
 export default {
   name: "TabOperation",
   data() {
@@ -166,7 +168,9 @@ export default {
       color: {},
       lineChange: "数据调取",
       statusLabel: "收起",
-      serverData:[]
+      serverData:[],
+      appData:[],
+      dataDocking:[],
     };
   },
 
@@ -183,6 +187,8 @@ export default {
   mounted() {
     this.getChartList(this.lineChange);
     this.getServerData();
+    this.getAppServiceData();
+    this.getDataDocking();
   },
 
   methods: {
@@ -249,7 +255,21 @@ export default {
       let res = await getServerData();
       let data = res.data.data.data;
       this.serverData = data;
-    }
+    },
+
+    // 获取应用服务运行情况数据
+    async getAppServiceData(){
+      let res = await getAppServiceData();
+      let data = res.data.data.data;
+      this.appData = data;
+    },
+
+    // 获取应用服务运行情况数据
+    async getDataDocking(){
+      let res = await getDataDocking();
+      let data = res.data.data.data;
+      this.dataDocking = data;
+    },
   },
 };
 </script>
