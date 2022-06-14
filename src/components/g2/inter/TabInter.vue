@@ -15,20 +15,24 @@ export default {
       type: Array,
       default: () => [],
     },
-    text:{
-      type:String
-    }
+    text: {
+      type: String,
+    },
   },
   data() {
     return {
-      chart:null,
-      color:null
+      chart: null,
+      color: null,
     };
   },
 
   components: {},
 
-  computed: {},
+  watch: {
+    data() {
+      this.changeInitChart();
+    },
+  },
 
   mounted() {
     this.initChart();
@@ -36,70 +40,89 @@ export default {
 
   methods: {
     initChart() {
-       this.chart = new Chart({
+      this.setColor()
+      let data = this.data;
+      data.push({
+        item: "未使用",
+        percent: +((1 - data[0].percent) * 1).toFixed(2),
+      });
+
+      this.chart = new Chart({
         container: this.idName,
         autoFit: true,
         height: 150,
+        defaultInteractions: ['tooltip'], // 仅保留 tooltip
       });
-      this.chart.data(this.data)
 
-      this.chart.facet('rect',{
-        fields:['y'],
-        eachView:(view,facet)=>{
-          let xVal = facet.data[0].y;
-          if(xVal >= 0.74 && xVal < 0.90){
-            this.color = '#ff9f24'
-          }else if(xVal >= 0.90){
-            this.color = '#ff5e4e'
-          } else if(xVal <= 0.74){
-            this.color = '#5473e8'
-          }
-          facet.data.push({ y: (1 - xVal).toFixed(2) * 1 });
-          view.data(facet.data);
-          
-          view.coordinate("theta", {
-            radius: 1,
-            innerRadius: 0.8,
-          });
-          
-          // 辅助文本
-          view
-            .annotation()
-            .text({
-              position: ["50%", "50%"],
-              content: `${xVal * 100}%`,
-              style: {
-                fontSize: 20,
-                fill: "#8c8c8c",
-                textAlign: "center",
-              },
-              offsetY: -10,
-            })
-            .text({
-              position: ["50%", "50%"],
-              content: this.text,
-              style: {
-                fontSize: 12,
-                fill: "#8c8c8c",
-                textAlign: "center",
-              },
-              offsetX: 0,
-              offsetY: 20,
-            })
-            
-          view
-            .interval()
-            .adjust("stack")
-            .position("y")
-            .color('y',[this.color,'#eceef1'])
+      this.chart.data(data);
 
-          view.interaction("element-active");
-        }
-      })
+      this.chart.tooltip(false); // 关闭 tooltip
 
-      
+      this.chart.legend(false); // 关闭图例
+
+      this.chart.scale("percent", {
+        formatter: (val) => {
+          val = val * 100 + "%";
+          return val;
+        },
+      });
+      this.chart.coordinate("theta", {
+        radius: 0.9,
+        innerRadius: 0.75,
+      });
+
+      // 辅助文本
+      this.chart
+        .annotation()
+        .text({
+          position: ["50%", "50%"],
+          content: `${this.data[0].percent * 100}%`,
+          style: {
+            fontSize: 20,
+            fill: "#8c8c8c",
+            textAlign: "center",
+          },
+          offsetY: -10,
+        })
+        .text({
+          position: ["50%", "50%"],
+          content: this.text,
+          style: {
+            fontSize: 14,
+            fill: "#8c8c8c",
+            textAlign: "center",
+          },
+          offsetY: 10,
+        });
+      this.chart
+        .interval()
+        .adjust("stack")
+        .position("percent")
+        .color("item", [this.color, "#e9ecf7"]);
+
+      this.chart.removeInteraction("element-active");
 
       this.chart.render();
+    },
+
+    setColor() {
+      let xVal = this.data[0].percent;
+      if (xVal >= 0.75 && xVal < 0.9) {
+        this.color = "#ff9f24";
+      } else if (xVal >= 0.9) {
+        this.color = "#ff5e4e";
+      } else if (xVal < 0.75) {
+        this.color = "#5473e8";
+      }
+    },
+
+    changeInitChart() {
+      let data = this.data;
+      data.push({
+        item: "未使用",
+        percent: +((1 - data[0].percent) * 1).toFixed(2),
+      });
+      this.chart.changeData(data);
     },
   },
 };

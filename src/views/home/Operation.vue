@@ -33,13 +33,46 @@
       </el-col>
     </el-row>
     <div class="center">
-      <el-row>
-      <el-col :span="12">服务器运行情况</el-col>
-      <el-col :span="12"></el-col>
-    </el-row>
-    <el-row>
-      <el-col :span="6"><ServerOperation></ServerOperation></el-col>
-    </el-row>
+      <el-collapse v-model="activeServerNames"  @change="handleChange">
+        <el-collapse-item name="1">
+          <template slot="title">
+            <el-row :gutter="20" style="width: 100%">
+              <el-col
+                :span="12"
+                class="tl center-title"
+                style="padding-left: 30px"
+                >服务器运行情况</el-col
+              >
+              <el-col :span="12" class="tr center-text">{{statusLabel}} (6)</el-col>
+            </el-row>
+          </template>
+          <div class="center-card">
+            <div class="center-card-item"><server-operation code="001" serveIp="192.168.0.1"></server-operation></div>
+          </div>
+        </el-collapse-item>
+      </el-collapse>
+    </div>
+    <div class="center">
+      <el-collapse v-model="appServerNames"  @change="handleChange">
+        <el-collapse-item name="1">
+          <template slot="title">
+            <el-row :gutter="20" style="width: 100%">
+              <el-col
+                :span="12"
+                class="tl center-title"
+                style="padding-left: 30px"
+                >应用服务运行情况</el-col
+              >
+              <el-col :span="12" class="tr center-text">{{statusLabel}} (6)</el-col>
+            </el-row>
+          </template>
+          <div class="center-card">
+            <div class="center-card-item">
+              <app-serveice appTitle="智慧园区IOC运营中心"></app-serveice>
+            </div>
+          </div>
+        </el-collapse-item>
+      </el-collapse>
     </div>
   </div>
 </template>
@@ -48,10 +81,13 @@
 import TabLine from "../../components/g2/line/TabLine.vue";
 import HeaderLeft from "./operation/HeaderLeft.vue";
 import ServerOperation from "./operation/Server.vue";
+import AppServeice from "./operation/AppServeice.vue";
 export default {
   name: "TabOperation",
   data() {
     return {
+      activeServerNames: ["1"],
+      appServerNames: ["1"],
       data: [
         {
           id: 1,
@@ -78,6 +114,7 @@ export default {
       chartList: [],
       color: {},
       lineChange: "数据调取",
+      statusLabel: "收起",
     };
   },
 
@@ -85,6 +122,7 @@ export default {
     TabLine,
     HeaderLeft,
     ServerOperation,
+    AppServeice
   },
 
   computed: {},
@@ -141,6 +179,10 @@ export default {
       this.lineChange = label;
       this.getChartList(label);
     },
+
+    handleChange(val){
+      val.length === 0 ? this.statusLabel = '展开' : this.statusLabel = '收起'
+    }
   },
 };
 </script>
@@ -161,8 +203,53 @@ export default {
 .line-active {
   color: #5473e8;
 }
-.center{
+.center {
   background: #ffffff;
   margin-bottom: 10px;
+}
+.center-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #222222;
+}
+.center-text {
+  font-weight: 400;
+  font-size: 14px;
+  color: rgb(84, 115, 232);
+}
+.center-card{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.center-card-item{
+  width: 411px;
+  margin-left: 20px;
+  border: 1px solid rgb(233, 236, 247);
+  margin-bottom: 20px;
+}
+.serve-top {
+  width: 100%;
+  background: rgb(245, 247, 253);
+  border-color: rgb(233, 236, 247);
+  border-width: 1px;
+  border-style: solid;
+}
+.serve-left {
+  padding: 10px;
+  text-align: left;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.serve-code {
+  font-size: 14px;
+  color: #222222;
+  font-weight: 700;
+}
+.serve-ip {
+  font-size: 14px;
+  color: #555555;
 }
 </style>

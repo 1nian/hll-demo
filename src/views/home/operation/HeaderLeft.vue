@@ -36,7 +36,7 @@
             </div>
             <div class="item-footer">
               <div>
-                <span class="item-border mr5"></span
+                <span class="item-border border-success mr5"></span
                 ><span class="item-success">启用中</span>
               </div>
               <div>
@@ -78,7 +78,7 @@ export default {
 .item-card {
   background: #ffffff;
   padding: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   box-sizing: border-box;
 }
 .box-card {
@@ -131,9 +131,11 @@ export default {
 .item-border {
   width: 9px;
   height: 9px;
-  background: #4fd785;
   border-radius: 50%;
   display: inline-block;
+}
+.border-success {
+  background: #4fd785;
 }
 .item-setting {
   font-size: 14px;
