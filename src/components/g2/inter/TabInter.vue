@@ -30,7 +30,7 @@ export default {
 
   watch: {
     data() {
-      this.changeInitChart();
+      // this.changeInitChart();
     },
   },
 
@@ -62,7 +62,7 @@ export default {
 
       this.chart.scale("percent", {
         formatter: (val) => {
-          val = val * 100 + "%";
+          val = (val * 100).toFixed(2) + "%";
           return val;
         },
       });
@@ -76,7 +76,7 @@ export default {
         .annotation()
         .text({
           position: ["50%", "50%"],
-          content: `${this.data[0].percent * 100}%`,
+          content: `${(this.data[0].percent * 100).toFixed(0)}%`,
           style: {
             fontSize: 20,
             fill: "#8c8c8c",

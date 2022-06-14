@@ -36,7 +36,7 @@
 
     <!-- 服务器运行情况 -->
     <div class="center">
-      <el-collapse v-model="activeServerNames"  @change="handleChange">
+      <el-collapse v-model="activeServerNames" @change="handleChange">
         <el-collapse-item name="1">
           <template slot="title">
             <el-row :gutter="20" style="width: 100%">
@@ -46,11 +46,20 @@
                 style="padding-left: 30px"
                 >服务器运行情况</el-col
               >
-              <el-col :span="12" class="tr center-text">{{statusLabel}} (6)</el-col>
+              <el-col :span="12" class="tr center-text"
+                >{{ statusLabel }} ({{serverData.length}})</el-col
+              >
             </el-row>
           </template>
           <div class="center-card">
-            <div class="center-card-item"><server-operation code="001" serveIp="192.168.0.1"></server-operation></div>
+            <div class="center-card-item" v-for="item in serverData" :key="item.id">
+              <server-operation
+                :code="item.id"
+                :serveIp="item.ip"
+                :status="item.status"
+                :interval="item.interval"
+              ></server-operation>
+            </div>
           </div>
         </el-collapse-item>
       </el-collapse>
@@ -58,7 +67,7 @@
 
     <!-- 应用服务运行情况 -->
     <div class="center">
-      <el-collapse v-model="appServerNames"  @change="handleChange">
+      <el-collapse v-model="appServerNames" @change="handleChange">
         <el-collapse-item name="1">
           <template slot="title">
             <el-row :gutter="20" style="width: 100%">
@@ -68,7 +77,9 @@
                 style="padding-left: 30px"
                 >应用服务运行情况</el-col
               >
-              <el-col :span="12" class="tr center-text">{{statusLabel}} (6)</el-col>
+              <el-col :span="12" class="tr center-text"
+                >{{ statusLabel }} (6)</el-col
+              >
             </el-row>
           </template>
           <div class="center-card">
@@ -85,7 +96,7 @@
 
     <!-- 数据对接厂商运行情况 -->
     <div class="center">
-      <el-collapse v-model="dataDockingNames"  @change="handleChange">
+      <el-collapse v-model="dataDockingNames" @change="handleChange">
         <el-collapse-item name="1">
           <template slot="title">
             <el-row :gutter="20" style="width: 100%">
@@ -95,12 +106,17 @@
                 style="padding-left: 30px"
                 >数据对接厂商运行情况</el-col
               >
-              <el-col :span="12" class="tr center-text">{{statusLabel}} (6)</el-col>
+              <el-col :span="12" class="tr center-text"
+                >{{ statusLabel }} (6)</el-col
+              >
             </el-row>
           </template>
           <div class="center-card">
             <div class="center-card-item">
-              <data-docking dataDockingTitle="ROMA" dataDockingId="0X001A"></data-docking>
+              <data-docking
+                dataDockingTitle="ROMA"
+                dataDockingId="0X001A"
+              ></data-docking>
             </div>
           </div>
         </el-collapse-item>
@@ -115,6 +131,7 @@ import HeaderLeft from "./operation/HeaderLeft.vue";
 import ServerOperation from "./operation/Server.vue";
 import AppServeice from "./operation/AppServeice.vue";
 import DataDocking from "./operation/DataDocking.vue";
+import { getServerData } from "../../api/getData";
 export default {
   name: "TabOperation",
   data() {
@@ -149,6 +166,7 @@ export default {
       color: {},
       lineChange: "数据调取",
       statusLabel: "收起",
+      serverData:[]
     };
   },
 
@@ -157,13 +175,14 @@ export default {
     HeaderLeft,
     ServerOperation,
     AppServeice,
-    DataDocking
+    DataDocking,
   },
 
   computed: {},
 
   mounted() {
     this.getChartList(this.lineChange);
+    this.getServerData();
   },
 
   methods: {
@@ -219,11 +238,18 @@ export default {
     },
 
     // 折叠面板展开与收起
-    handleChange(val){
-      val.length === 0 ? this.statusLabel = '展开' : this.statusLabel = '收起'
+    handleChange(val) {
+      val.length === 0
+        ? (this.statusLabel = "展开")
+        : (this.statusLabel = "收起");
     },
 
-    
+    // 获取服务器运行情况数据
+    async getServerData(){
+      let res = await getServerData();
+      let data = res.data.data.data;
+      this.serverData = data;
+    }
   },
 };
 </script>
@@ -258,12 +284,12 @@ export default {
   font-size: 14px;
   color: rgb(84, 115, 232);
 }
-.center-card{
+.center-card {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
 }
-.center-card-item{
+.center-card-item {
   width: 411px;
   margin-left: 20px;
   border: 1px solid rgb(233, 236, 247);

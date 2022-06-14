@@ -8,8 +8,10 @@
             <p class="serve-ip">服务器地址：{{ serveIp }}</p>
           </div>
           <div>
-            <span class="item-border border-success mr5"></span>
-            <span class="item-f-text">可用</span>
+            <span :class="['item-border', 'mr5', 'border-danger',{
+              'border-success' : status === '可用'
+            }]"></span>
+            <span class="item-f-text">{{status}}</span>
           </div>
         </div>
       </el-col>
@@ -18,8 +20,22 @@
           <el-col :span="8"
             ><TabInter
               :idName="code + 'inter-1'"
-              :data="[{ item: '已占用', percent: 0.62 }]"
+              :data="interval.cpu"
               text="CPU占用率"
+            ></TabInter
+          ></el-col>
+          <el-col :span="8"
+            ><TabInter
+              :idName="code + 'inter-2'"
+              :data="interval.memory"
+              text="内存占用率"
+            ></TabInter
+          ></el-col>
+          <el-col :span="8"
+            ><TabInter
+              :idName="code + 'inter-3'"
+              :data="interval.storage"
+              text="存储占用率"
             ></TabInter
           ></el-col>
         </el-row>
@@ -34,11 +50,18 @@ export default {
   name: "ServerOperation",
   props: {
     code: {
-      type: String,
+      type: Number,
     },
     serveIp: {
       type: String,
     },
+    status: {
+      type: String,
+    },
+    interval:{
+      type:Object,
+      default:()=>{}
+    }
   },
   data() {
     return {};
@@ -47,8 +70,6 @@ export default {
   components: {
     TabInter,
   },
-
-  computed: {},
 
   methods: {},
 };

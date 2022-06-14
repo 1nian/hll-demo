@@ -5,9 +5,9 @@ let Random = Mock.Random;
 // 随机手机号生成 
 // 通过 Random.phone() 调用
 Random.extend({
-    phone:function(){
-        let phonePrefixs = ['135','185','137'];
-        return  this.pick(phonePrefixs) + Mock.mock(/\d{8}/)
+    phone: function () {
+        let phonePrefixs = ['135', '185', '137'];
+        return this.pick(phonePrefixs) + Mock.mock(/\d{8}/)
     }
 })
 
@@ -76,4 +76,46 @@ Mock.mock('http://localhost:8080/visitorList', {
             }
         ]
     }
+})
+
+
+// 首页，服务器运行情况，数据生成
+
+Mock.mock('http://localhost:8080/serverData', {
+    'code': 200,
+    data: {
+        'data|6': [
+            {
+                'id|+1': 1,
+                interval:
+                    {
+                        'cpu': [
+                            {
+                                "percent|0.10-1": 1,
+                                item:'已占用',
+                            }
+                        ],
+                        'memory': [
+                            {
+                                "percent|0.10-1": 1,
+                                item:'已占用',
+                            }
+                        ],
+                        'storage': [
+                            {
+                                "percent|0.10-1": 1,
+                                item:'已占用',
+                            }
+                        ],
+                    }
+                ,
+                ip: Random.ip(),
+                "status|+1": [
+                    "可用",
+                    "不可用",
+                ],
+            }
+        ]
+    },
+    
 })

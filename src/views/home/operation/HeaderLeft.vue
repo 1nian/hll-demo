@@ -134,6 +134,9 @@ export default {
   border-radius: 50%;
   display: inline-block;
 }
+.border-danger {
+  background: #ff5e4e;
+}
 .border-success {
   background: #4fd785;
 }
