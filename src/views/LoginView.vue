@@ -194,7 +194,7 @@ export default {
   display: flex;
   flex-direction: row-reverse;
   align-items: center;
-  background-image: url('../assets/login-bg.png') ;
+  background-image: url('../assets//images/login-bg.png') ;
   background-repeat: no-repeat;
   background-size: cover;
   padding: 30px 220px 30px 0;

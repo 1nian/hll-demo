@@ -28,7 +28,7 @@
         <el-col :span="6">
           <el-card class="box-card" shadow="never">
             <div class="item-img">
-              <img src="../../../assets/index/icon-4.png" alt="" />
+              <img src="../../../assets//images/icon-4.png" alt="" />
               <div>
                 <span class="item-title mr10">运维通知人</span
                 ><span class="item-title">7</span>

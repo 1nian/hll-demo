@@ -2,7 +2,7 @@
   <el-container class="hll-container">
     <el-header class="hll-header">
       <div class="hll-header-icon">
-        <img src="../assets/logo.png" alt="" />
+        <img src="../assets//images/logo.png" alt="" />
       </div>
       <div class="hll-header-right">
         <div class="hll-header-text">智慧园区IOC运营中心综合信息管理系统</div>
