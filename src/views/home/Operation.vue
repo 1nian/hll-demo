@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- 顶部模块 -->
     <el-row :gutter="20">
       <header-left :data="data" @setting="setting"></header-left>
       <el-col :span="12" class="item-card">
@@ -32,6 +33,8 @@
         ></tab-line>
       </el-col>
     </el-row>
+
+    <!-- 服务器运行情况 -->
     <div class="center">
       <el-collapse v-model="activeServerNames"  @change="handleChange">
         <el-collapse-item name="1">
@@ -52,6 +55,8 @@
         </el-collapse-item>
       </el-collapse>
     </div>
+
+    <!-- 应用服务运行情况 -->
     <div class="center">
       <el-collapse v-model="appServerNames"  @change="handleChange">
         <el-collapse-item name="1">
@@ -70,6 +75,33 @@
             <div class="center-card-item">
               <app-serveice appTitle="智慧园区IOC运营中心"></app-serveice>
             </div>
+            <div class="center-card-item">
+              <app-serveice appTitle="智慧园区IOC运营中心"></app-serveice>
+            </div>
+          </div>
+        </el-collapse-item>
+      </el-collapse>
+    </div>
+
+    <!-- 数据对接厂商运行情况 -->
+    <div class="center">
+      <el-collapse v-model="dataDockingNames"  @change="handleChange">
+        <el-collapse-item name="1">
+          <template slot="title">
+            <el-row :gutter="20" style="width: 100%">
+              <el-col
+                :span="12"
+                class="tl center-title"
+                style="padding-left: 30px"
+                >数据对接厂商运行情况</el-col
+              >
+              <el-col :span="12" class="tr center-text">{{statusLabel}} (6)</el-col>
+            </el-row>
+          </template>
+          <div class="center-card">
+            <div class="center-card-item">
+              <data-docking dataDockingTitle="ROMA" dataDockingId="0X001A"></data-docking>
+            </div>
           </div>
         </el-collapse-item>
       </el-collapse>
@@ -82,12 +114,14 @@ import TabLine from "../../components/g2/line/TabLine.vue";
 import HeaderLeft from "./operation/HeaderLeft.vue";
 import ServerOperation from "./operation/Server.vue";
 import AppServeice from "./operation/AppServeice.vue";
+import DataDocking from "./operation/DataDocking.vue";
 export default {
   name: "TabOperation",
   data() {
     return {
       activeServerNames: ["1"],
       appServerNames: ["1"],
+      dataDockingNames: ["1"],
       data: [
         {
           id: 1,
@@ -122,7 +156,8 @@ export default {
     TabLine,
     HeaderLeft,
     ServerOperation,
-    AppServeice
+    AppServeice,
+    DataDocking
   },
 
   computed: {},
@@ -132,6 +167,12 @@ export default {
   },
 
   methods: {
+    // 运维通知设置
+    setting() {
+      console.log("1");
+    },
+
+    // 获取折线图数据
     getChartList(label) {
       let color1 = {
         status1: "rgb(84, 115, 232)",
@@ -171,18 +212,18 @@ export default {
       }
     },
 
-    setting() {
-      console.log("1");
-    },
-
+    // 折线图数据源切换
     changeLine(label) {
       this.lineChange = label;
       this.getChartList(label);
     },
 
+    // 折叠面板展开与收起
     handleChange(val){
       val.length === 0 ? this.statusLabel = '展开' : this.statusLabel = '收起'
-    }
+    },
+
+    
   },
 };
 </script>
