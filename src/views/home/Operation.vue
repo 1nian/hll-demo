@@ -25,15 +25,29 @@
             >
           </el-col>
         </el-row>
-        <tab-line :data="chartList" :status1="color.status1" :status2="color.status2"></tab-line>
+        <tab-line
+          :data="chartList"
+          :status1="color.status1"
+          :status2="color.status2"
+        ></tab-line>
       </el-col>
     </el-row>
+    <div class="center">
+      <el-row>
+      <el-col :span="12">服务器运行情况</el-col>
+      <el-col :span="12"></el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="6"><ServerOperation></ServerOperation></el-col>
+    </el-row>
+    </div>
   </div>
 </template>
 
 <script>
 import TabLine from "../../components/g2/line/TabLine.vue";
 import HeaderLeft from "./operation/HeaderLeft.vue";
+import ServerOperation from "./operation/Server.vue";
 export default {
   name: "TabOperation",
   data() {
@@ -70,6 +84,7 @@ export default {
   components: {
     TabLine,
     HeaderLeft,
+    ServerOperation,
   },
 
   computed: {},
@@ -145,5 +160,9 @@ export default {
 }
 .line-active {
   color: #5473e8;
+}
+.center{
+  background: #ffffff;
+  margin-bottom: 10px;
 }
 </style>
