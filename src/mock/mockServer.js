@@ -78,6 +78,34 @@ Mock.mock('http://localhost:8080/visitorList', {
     }
 })
 
+// 首页，平台运维情况分析，数据生成
+
+Mock.mock('http://localhost:8080/chartList', {
+    'code': 200,
+    'dataGet|7': [
+        {
+            'id|+1': 1,
+            'value|0-400': 400,
+            status: '数据调取',
+        }
+    ],
+    'dataPush|7': [
+        {
+            'id|+1': 1,
+            'value|0-400': 400,
+            status: '数据推送',
+        }
+    ],
+    'date': function () {
+        var category = [];
+        var dottedBase = +new Date();
+        for (var i = 0; i < 8; i++) {
+            var date = new Date((dottedBase -= 1000 * 3600 * 24));
+            category.push({id:i, date: [date.getMonth() + 1, date.getDate()].join("-") });
+        }
+        return category;
+    }
+})
 
 // 首页，服务器运行情况，数据生成
 
@@ -88,26 +116,26 @@ Mock.mock('http://localhost:8080/serverData', {
             {
                 'id|+1': 1,
                 interval:
-                    {
-                        'cpu': [
-                            {
-                                "percent|0.10-1": 1,
-                                item:'已占用',
-                            }
-                        ],
-                        'memory': [
-                            {
-                                "percent|0.10-1": 1,
-                                item:'已占用',
-                            }
-                        ],
-                        'storage': [
-                            {
-                                "percent|0.10-1": 1,
-                                item:'已占用',
-                            }
-                        ],
-                    }
+                {
+                    'cpu': [
+                        {
+                            "percent|0.10-1": 1,
+                            item: '已占用',
+                        }
+                    ],
+                    'memory': [
+                        {
+                            "percent|0.10-1": 1,
+                            item: '已占用',
+                        }
+                    ],
+                    'storage': [
+                        {
+                            "percent|0.10-1": 1,
+                            item: '已占用',
+                        }
+                    ],
+                }
                 ,
                 ip: Random.ip(),
                 "status|+1": [
@@ -117,7 +145,7 @@ Mock.mock('http://localhost:8080/serverData', {
             }
         ]
     },
-    
+
 })
 
 
@@ -141,7 +169,7 @@ Mock.mock('http://localhost:8080/appServiceData', {
             }
         ]
     },
-    
+
 })
 
 // 首页，数据厂商对接情况，数据生成
@@ -158,11 +186,11 @@ Mock.mock('http://localhost:8080/dataDocking', {
                 ],
                 "calls|1000-100000000": 1000000000,
                 "dataFlow|100-10000": 10000,
-                name:'@cname',
+                name: '@cname',
                 phone: Random.phone(),
                 dataDockingId: '@cword(012345ABCDEF,6)',
             }
         ]
     },
-    
+
 })
