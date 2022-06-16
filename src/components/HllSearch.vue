@@ -41,6 +41,7 @@
         v-if="isAdd"
         class="hll-el-button hll-search-button"
         @click="add"
+        type="primary"
         >添加</el-button
       >
     </div>

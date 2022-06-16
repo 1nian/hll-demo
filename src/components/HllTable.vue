@@ -1,45 +1,41 @@
 <template>
   <div class="hll-table">
-    <el-table :data="tableData" border style="width: 100%" :default-sort="defaultSort">
-      <el-table-column v-if="isImg" label="图片" width="80px" align="center">
-        <template slot-scope="scope">
-          
-          <!--  大图预览组件
-            <div class="demo-image__preview">
-            <el-image 
-              style="width: 30px; height: 30px"
-              :src="url"
-              @click="clickImg(scope.row.img)" 
-              :preview-src-list="srcList">
-            </el-image>
-          </div> -->
-
-          <!-- Popover 提示组件 -->
-          <el-popover
-            placement="top-start"
-            width="200"
-            trigger="hover"
-            effect="dark"
-            >
-            <div><img :src="scope.row.img" alt=""></div>
-            <img slot="reference" :src="url" alt="" style="width: 30px; height: 30px">
-          </el-popover>
+    <el-table
+      :data="tableData"
+      border
+      style="width: 100%"
+      :default-sort="defaultSort"
+    >
+      <template v-for="item in titleData">
+        <template v-if="!item.__slotName">
+          <el-table-column
+            align="center"
+            :key="item.prop"
+            v-bind="item"
+            show-overflow-tooltip
+          >
+          </el-table-column>
         </template>
-      </el-table-column>
-      <el-table-column
-        align="center"
-        v-for="(item, index) in titleData"
-        :key="index"
-        :label="item.label"
-        :prop="item.prop"
-      >
-      </el-table-column>
+        <!-- 插槽 __slotName-->
+        <template v-if="item.__slotName">
+          <slot :name="item.__slotName"></slot>
+        </template>
+      </template>
+
       <el-table-column label="操作" v-if="isOperation" align="center">
         <template slot-scope="scope">
-          <el-button :class="[{mr30:isEdit}]" v-if="isSee" type="text" @click="see(scope.row)"
+          <el-button
+            :class="[{ mr30: isEdit }]"
+            v-if="isSee"
+            type="text"
+            @click="see(scope.row)"
             >查看</el-button
           >
-          <el-button :class="[{mr30:isDel}]" v-if="isEdit" type="text" @click="edit(scope.row)"
+          <el-button
+            :class="[{ mr30: isDel }]"
+            v-if="isEdit"
+            type="text"
+            @click="edit(scope.row)"
             >编辑</el-button
           >
           <el-button
@@ -102,19 +98,15 @@ export default {
       type: Boolean,
       default: true,
     },
-    // 列中是否展示图片是否出现
-    isImg: {
-      type: Boolean,
-      default: false,
-    },
-    // 列中是否展示图片是否出现
+    
+    // 表格默认排序
     defaultSort: {
       type: Object,
-      default: function(){
+      default: function () {
         return {
-          prop:'date',
-          order:'descending'
-        }
+          prop: "date",
+          order: "descending",
+        };
       },
     },
 
@@ -145,22 +137,22 @@ export default {
       default: 100,
     },
   },
-  data(){
+  data() {
     return {
-      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
-      srcList: []
-    }
+      url: "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg",
+      srcList: [],
+    };
   },
   methods: {
     see(item) {
       // console.log(item);
-      this.$emit('seeDtaItem',item)
+      this.$emit("seeDtaItem", item);
     },
     edit(item) {
-      this.$emit('editDataItem',item);
+      this.$emit("editDataItem", item);
     },
     del(item) {
-      this.$emit('delDataItem',item);
+      this.$emit("delDataItem", item);
     },
 
     handleSizeChange(val) {
@@ -170,10 +162,10 @@ export default {
       this.$emit("currentChange", val);
     },
 
-    clickImg(item){
-      this.srcList = []
-      this.srcList.push(item)
-    }
+    clickImg(item) {
+      this.srcList = [];
+      this.srcList.push(item);
+    },
   },
 };
 </script>
@@ -197,7 +189,7 @@ export default {
   color: #5473e8;
   font-size: 14px;
 }
-.mr30{
+.mr30 {
   margin-right: 30px;
 }
 .button-del {

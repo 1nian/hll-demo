@@ -24,8 +24,29 @@
       @seeDtaItem="getDataItem"
       @editDataItem="operationalTableData"
       @delDataItem="delDataItem"
-    ></hll-table>
-
+    >
+      <!-- 设置图片 -->
+      <template slot="img">
+        <el-table-column label="图片" align="center">
+          <template slot-scope="scope">
+            <el-popover
+              placement="top-start"
+              width="200"
+              trigger="hover"
+              effect="dark"
+            >
+              <div><img :src="scope.row.img" alt="" /></div>
+              <img
+                slot="reference"
+                src="https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg"
+                alt=""
+                style="width: 30px; height: 30px"
+              />
+            </el-popover>
+          </template>
+        </el-table-column>
+      </template>
+    </hll-table>
     <hll-dialog
       :title="title"
       :isDialog="isDialog"
@@ -63,9 +84,13 @@ export default {
       ],
       titleData: [
         { label: "访客姓名", prop: "visitorName", isShow: true },
-        { label: "图片", prop: "img", isShow: false },
+        { label: "图片", prop: "img", isShow: true, __slotName: "img" },
         { label: "是否自驾", prop: "isDriving", isShow: true },
-        { label: "访客电话", prop: "visitorPhone", isShow: true },
+        {
+          label: "访客电话",
+          prop: "visitorPhone",
+          isShow: true,
+        },
         { label: "进出入状态", prop: "status", isShow: true },
         { label: "被访人姓名", prop: "spinsterName", isShow: true },
         { label: "通行时间", prop: "date", isShow: true },
@@ -129,19 +154,22 @@ export default {
     // 筛选表格数据
     queryTableData(params) {
       let goobleData = JSON.parse(JSON.stringify(this.alwaysData));
-      if(params.status === 'search'){
-        let data = goobleData.filter(item => {
-          return item.status === params.valueSelect && item.visitorName === params.valueInput && item.date === params.valueDate
+      if (params.status === "search") {
+        let data = goobleData.filter((item) => {
+          return (
+            item.status === params.valueSelect &&
+            item.visitorName === params.valueInput &&
+            item.date === params.valueDate
+          );
         });
         this.$store.state.mockData = data;
         this.total = data.length;
       }
 
-      if(params.status === 'reset'){
+      if (params.status === "reset") {
         this.$store.state.mockData = this.alwaysData;
         this.total = this.alwaysData.length;
       }
-     
     },
 
     // dialog 查看数据详情
