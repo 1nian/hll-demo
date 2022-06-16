@@ -21,9 +21,16 @@
             </div>
           </el-col>
           <el-col :span="16">
-            <div class="grid-content bg-purple-light text-left">
-              {{ templateInfo[item.prop] }}
-            </div>
+            <template v-if="!item.__slotName">
+              <div class="grid-content bg-purple-light text-left">
+                {{ templateInfo[item.prop] }}
+              </div>
+            </template>
+            <template v-if="item.__slotName">
+              <div class="grid-content bg-purple-light text-left">
+                <img :src="templateInfo[item.prop]" alt="">
+              </div>
+            </template>
           </el-col>
         </el-row>
       </div>
