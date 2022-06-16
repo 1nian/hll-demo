@@ -79,27 +79,63 @@ Mock.mock('http://localhost:8080/visitorList', {
 })
 
 // 首页，平台运维情况分析，数据生成
-
+// 数据源1
 Mock.mock('http://localhost:8080/chartList', {
     'code': 200,
-    'dataGet|7': [
+    data:[
         {
-            'id|+1': 1,
-            'value|0-400': 400,
-            status: '数据调取',
-        }
-    ],
-    'dataPush|7': [
-        {
-            'id|+1': 1,
-            'value|0-400': 400,
-            status: '数据推送',
+            'dataGet|7': [
+                {
+                    'id|+1': 1,
+                    'value|0-400': 400,
+                    status: '数据调取',
+                }
+            ],
+            'dataPush|7': [
+                {
+                    'id|+1': 1,
+                    'value|0-400': 400,
+                    status: '数据推送',
+                }
+            ],
         }
     ],
     'date': function () {
         var category = [];
         var dottedBase = +new Date();
-        for (var i = 0; i < 8; i++) {
+        for (var i = 1; i < 8; i++) {
+            var date = new Date((dottedBase -= 1000 * 3600 * 24));
+            category.push({id:i, date: [date.getMonth() + 1, date.getDate()].join("-") });
+        }
+        return category;
+    }
+})
+
+// 数据源2
+Mock.mock('http://localhost:8080/chartListV2', {
+    'code': 200,
+    data:[
+        {
+            'dataGet|7': [
+                {
+                    'id|+1': 1,
+                    'value|0-400': 400,
+                    status: '数据调取',
+                }
+            ],
+            'dataPush|7': [
+                {
+                    'id|+1': 1,
+                    'value|0-400': 400,
+                    status: '数据推送',
+                }
+            ],
+        }
+    ],
+    'date': function () {
+        var category = [];
+        var dottedBase = +new Date();
+        for (var i = 1; i < 8; i++) {
             var date = new Date((dottedBase -= 1000 * 3600 * 24));
             category.push({id:i, date: [date.getMonth() + 1, date.getDate()].join("-") });
         }

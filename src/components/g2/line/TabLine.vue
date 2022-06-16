@@ -15,11 +15,9 @@ export default {
       type: Array,
       default: () => [],
     },
-    status1:{
-      type:String
-    },
-    status2:{
-      type:String
+    colors: {
+      type: Array,
+      default: () => [],
     },
   },
 
@@ -39,9 +37,8 @@ export default {
         container: "container",
         autoFit: true,
         height: 170,
-        padding: [30, 20, 30, 30]
+        padding: [30, 20, 30, 30],
       });
-
 
       this.chart.data(this.data);
 
@@ -50,21 +47,20 @@ export default {
         shared: true,
       });
 
-      this.chart.legend( {
+      this.chart.legend({
         position: "top",
       });
 
       this.chart.scale({
-        数据调取: {
+        value: {
           min: 0,
           max: 400,
         },
       });
-      this.chart.axis("数据推送", false);
 
       this.chart.annotation().text({
         content: "单位：次",
-         position: [0, 400],
+        position: [0, 400],
         style: {
           fill: "#8c8c8c",
           fontWeight: 300,
@@ -73,28 +69,23 @@ export default {
         offsetX: -88,
       });
 
+      this.chart
+        .area()
+        .position("date*value")
+        .color("status", this.colors)
+        .shape("smooth");
 
       this.chart
         .line()
-        .position("date*数据调取")
-        .shape("smooth")
-        
-      this.chart
-        .area()
-        .adjust('stack')
-        .position("date*数据调取")
-        .shape("smooth")
+        .position("date*value")
+        .color("status", this.colors)
+        .shape("smooth");
 
       this.chart
-        .line()
-        .position("date*数据推送")
-        .shape("smooth")
-        
-      this.chart
-        .area()
-        .position("date*数据推送")
-        .shape("smooth")
-
+        .point()
+        .position("date*value")
+        .color("status", this.colors)
+        .shape("circle");
       this.chart.interaction("active-region");
       this.chart.render();
     },

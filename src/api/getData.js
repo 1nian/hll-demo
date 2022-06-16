@@ -5,7 +5,10 @@ export const getCatList = (params) => axios('/catList',params)
 export const getVisitorList = (params) => axios('/visitorList',params)
 
 // 首页，平台运维情况分析，数据生成
+// 数据源1
 export const getChartList = (params) => axios('/chartList',params)
+// 数据源2
+export const getChartListV2 = (params) => axios('/chartListV2',params)
 
 // 首页，服务器运行情况，数据生成
 export const getServerData = (params) => axios('/serverData',params)

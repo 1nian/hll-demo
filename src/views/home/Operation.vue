@@ -8,29 +8,22 @@
           <el-col :span="18" class="tl">平台运维情况分析</el-col>
           <el-col :span="6" class="tr">
             <span
-              @click="changeLine('数据调取')"
-              :class="[
-                'header-label',
-                { 'line-active': lineChange === '数据调取' },
-              ]"
+              @click="changeLine('get')"
+              :class="['header-label', { 'line-active': lineChange === 'get' }]"
               >数据调取</span
             >
             |
             <span
-              @click="changeLine('运营告警')"
+              @click="changeLine('push')"
               :class="[
                 'header-label',
-                { 'line-active': lineChange === '运营告警' },
+                { 'line-active': lineChange === 'push' },
               ]"
               >运营告警</span
             >
           </el-col>
         </el-row>
-        <tab-line
-          :data="chartList"
-          :status1="color.status1"
-          :status2="color.status2"
-        ></tab-line>
+        <tab-line :data="chartList" :colors="colors"></tab-line>
       </el-col>
     </el-row>
 
@@ -47,12 +40,16 @@
                 >服务器运行情况</el-col
               >
               <el-col :span="12" class="tr center-text"
-                >{{ serverLabel }} ({{serverData.length}})</el-col
+                >{{ serverLabel }} ({{ serverData.length }})</el-col
               >
             </el-row>
           </template>
           <div class="center-card">
-            <div class="center-card-item" v-for="item in serverData" :key="item.id">
+            <div
+              class="center-card-item"
+              v-for="item in serverData"
+              :key="item.id"
+            >
               <server-operation
                 :code="item.id"
                 :serveIp="item.ip"
@@ -78,13 +75,24 @@
                 >应用服务运行情况</el-col
               >
               <el-col :span="12" class="tr center-text"
-                >{{ appLabel }} ({{appData.length}})</el-col
+                >{{ appLabel }} ({{ appData.length }})</el-col
               >
             </el-row>
           </template>
           <div class="center-card">
-            <div class="center-card-item" v-for="app in appData" :key="'app'+ app.id">
-              <app-serveice appTitle="智慧园区IOC运营中心" :calls="app.calls" :dataFlow="app.dataFlow" :errCalls="app.errCalls" :rate="app.rate" :status="app.status"></app-serveice>
+            <div
+              class="center-card-item"
+              v-for="app in appData"
+              :key="'app' + app.id"
+            >
+              <app-serveice
+                appTitle="智慧园区IOC运营中心"
+                :calls="app.calls"
+                :dataFlow="app.dataFlow"
+                :errCalls="app.errCalls"
+                :rate="app.rate"
+                :status="app.status"
+              ></app-serveice>
             </div>
           </div>
         </el-collapse-item>
@@ -104,12 +112,16 @@
                 >数据对接厂商运行情况</el-col
               >
               <el-col :span="12" class="tr center-text"
-                >{{ dockingLabel }} ({{dataDocking.length}})</el-col
+                >{{ dockingLabel }} ({{ dataDocking.length }})</el-col
               >
             </el-row>
           </template>
           <div class="center-card">
-            <div class="center-card-item" v-for="docking in dataDocking" :key="'docking'+docking.id">
+            <div
+              class="center-card-item"
+              v-for="docking in dataDocking"
+              :key="'docking' + docking.id"
+            >
               <data-docking
                 dataDockingTitle="ROMA"
                 :dataDockingId="docking.dataDockingId"
@@ -133,7 +145,13 @@ import HeaderLeft from "./operation/HeaderLeft.vue";
 import ServerOperation from "./operation/Server.vue";
 import AppServeice from "./operation/AppServeice.vue";
 import DataDocking from "./operation/DataDocking.vue";
-import { getServerData,getAppServiceData,getDataDocking } from "../../api/getData";
+import {
+  getChartList,
+  getChartListV2,
+  getServerData,
+  getAppServiceData,
+  getDataDocking,
+} from "../../api/getData";
 export default {
   name: "TabOperation",
   data() {
@@ -165,14 +183,14 @@ export default {
         },
       ],
       chartList: [],
-      color: {},
-      lineChange: "数据调取",
+      colors: ["rgb(84, 115, 232)", "rgb(35, 188, 202)"],
+      lineChange: "get",
       serverLabel: "收起",
       appLabel: "收起",
       dockingLabel: "收起",
-      serverData:[],
-      appData:[],
-      dataDocking:[],
+      serverData: [],
+      appData: [],
+      dataDocking: [],
     };
   },
 
@@ -187,7 +205,11 @@ export default {
   computed: {},
 
   mounted() {
-    this.getChartList(this.lineChange);
+     let data = JSON.parse(sessionStorage.getItem(`${this.lineChange}_data`)) ;
+     if(!(data && data.length > 0)){
+       this.getChartList(this.lineChange);
+     }
+     this.chartList = data;
     this.getServerData();
     this.getAppServiceData();
     this.getDataDocking();
@@ -200,80 +222,97 @@ export default {
     },
 
     // 获取折线图数据
-    getChartList(label) {
-      let color1 = {
-        status1: "rgb(84, 115, 232)",
-        status2: "rgb(35, 188, 202)",
-      };
+    async getChartList(label) {
+      if (label === "get") {
+        let res = await getChartList();
+        let dataList = res.data.data;
+        let dateList = res.data.date;
+        this.setChatrList(dataList[0], dateList);
+      }
 
-      let data1 = [
-        { date: "05-01", 数据调取: 100, 数据推送: 150 },
-        { date: "05-06", 数据调取: 140, 数据推送: 110 },
-        { date: "05-11", 数据调取: 230, 数据推送: 200 },
-        { date: "05-16", 数据调取: 100, 数据推送: 140 },
-        { date: "05-21", 数据调取: 130, 数据推送: 100 },
-        { date: "05-26", 数据调取: 234, 数据推送: 134 },
-        { date: "05-31", 数据调取: 170, 数据推送: 160 },
-      ];
-
-      let color2 = {
-        status1: "rgb(255, 159, 36)",
-        status2: "rgb(255, 94, 78)",
-      };
-      let data2 = [
-        { date: "05-01", 数据调取: 85, 数据推送: 103 },
-        { date: "05-06", 数据调取: 164, 数据推送: 90 },
-        { date: "05-11", 数据调取: 230, 数据推送: 200 },
-        { date: "05-16", 数据调取: 45, 数据推送: 67 },
-        { date: "05-21", 数据调取: 130, 数据推送: 100 },
-        { date: "05-26", 数据调取: 56, 数据推送: 134 },
-        { date: "05-31", 数据调取: 100, 数据推送: 100 },
-      ];
-
-      if (label === "数据调取") {
-        this.chartList = data1;
-        this.color = color1;
-      } else {
-        this.chartList = data2;
-        this.color = color2;
+      if (label === "push") {
+        let res = await getChartListV2();
+        let dataList = res.data.data;
+        let dateList = res.data.date;
+        this.setChatrList(dataList[0], dateList);
       }
     },
 
     // 折线图数据源切换
     changeLine(label) {
       this.lineChange = label;
-      this.getChartList(label);
+
+      let colors = label === 'get' ? colors = ["rgb(84, 115, 232)", "rgb(35, 188, 202)"] : colors = ["rgb(255, 159, 36)", "rgb(255, 94, 78)"];
+
+      // 获取折线图数据
+      let data = JSON.parse(sessionStorage.getItem(`${label}_data`)) ;
+      
+      if (data && data.length > 0) {
+        this.chartList = data;
+        this.colors = colors
+      } else {
+        this.getChartList(label);
+      }
+    },
+
+    // 生成最终的 chatrList
+    setChatrList({ dataGet, dataPush }, dateList) {
+      let data_1 = this.newArray(dataGet, dateList);
+      let data_2 = this.newArray(dataPush, dateList);
+      let data = data_1.concat(data_2);
+      this.chartList = data.slice().reverse();
+      // 数据折线图存储
+      sessionStorage.setItem(`${this.lineChange}_data`, JSON.stringify(data.slice().reverse()));
+    },
+
+    // 数组合并
+    newArray(data1, data2) {
+      let data = [];
+      data = data1.map((data1) => {
+        let info = data2.find((data2) => data1.id === data2.id);
+        return {
+          ...data1,
+          ...info,
+        };
+      });
+      return data;
     },
 
     // 折叠面板展开与收起
     handleChange(val) {
-      if(val === 'server'){
-        this.serverLabel === "收起" ? this.serverLabel = "展开" : this.serverLabel = "收起"
+      if (val === "server") {
+        this.serverLabel === "收起"
+          ? (this.serverLabel = "展开")
+          : (this.serverLabel = "收起");
       }
-      if(val === 'app'){
-        this.appLabel === "收起" ? this.appLabel = "展开" : this.appLabel = "收起"
+      if (val === "app") {
+        this.appLabel === "收起"
+          ? (this.appLabel = "展开")
+          : (this.appLabel = "收起");
       }
-      if(val === 'docking'){
-        this.dockingLabel === "收起" ? this.dockingLabel = "展开" : this.dockingLabel = "收起"
+      if (val === "docking") {
+        this.dockingLabel === "收起"
+          ? (this.dockingLabel = "展开")
+          : (this.dockingLabel = "收起");
       }
     },
 
     // 获取服务器运行情况数据
-    async getServerData(){
+    async getServerData() {
       let res = await getServerData();
       let data = res.data.data.data;
       this.serverData = data;
     },
 
     // 获取应用服务运行情况数据
-    async getAppServiceData(){
+    async getAppServiceData() {
       let res = await getAppServiceData();
       let data = res.data.data.data;
       this.appData = data;
     },
 
     // 获取应用服务运行情况数据
-    async getDataDocking(){
+    async getDataDocking() {
       let res = await getDataDocking();
       let data = res.data.data.data;
       this.dataDocking = data;
