@@ -29,6 +29,7 @@ export default {
     },
   },
   mounted() {
+    console.log(this);
     this.InitChart();
   },
   methods: {
@@ -90,7 +91,8 @@ export default {
       this.chart.render();
     },
     changeInitChart() {
-      this.chart.changeData(this.data);
+      this.chart.destroy();
+      this.InitChart()
     },
   },
 };
