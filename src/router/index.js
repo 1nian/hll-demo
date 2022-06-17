@@ -94,6 +94,15 @@ const routes = [
             },
           },
           {
+            path: "/control/traffic/operation/:id",
+            name: "TrafficOperation",
+            component: () => import("../views/control/operation.vue"),
+            meta: {
+              isAuth: true,
+              isKeepAlive: true
+            },
+          },
+          {
             path: "/control/visitor",
             name: "ControlVisitor",
             component: () => import("../views/control/Visitor.vue"),

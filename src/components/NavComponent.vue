@@ -118,4 +118,9 @@ export default {
   color: #5473e8;
   font-weight: bold;
 }
+.router-link-active {
+  background-color: #f5f7fd;
+  color: #5473e8;
+  font-weight: bold;
+}
 </style>

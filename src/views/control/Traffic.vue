@@ -12,8 +12,9 @@
       :total="total"
       @sizeChange="getSizeChange"
       @currentChange="getCurrentChange"
+      @editDataItem="editDataItem"
       :isOperation="true"
-      :isEdit="false"
+      :isEdit="true"
       :isDel="false"
       @seeDtaItem="getDtaItem"
     ></hll-table>
@@ -107,6 +108,13 @@ export default {
     },
     closeDialog() {
       this.isDialog = false;
+    },
+
+    editDataItem(item) {
+      this.$router.push({ name: "TrafficOperation", params: { id: item.id } });
+      item['content'] = '编辑'
+
+      this.$store.commit('setOperationInfo',item)
     },
   },
 };

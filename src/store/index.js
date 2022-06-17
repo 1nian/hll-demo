@@ -16,6 +16,8 @@ export default new Vuex.Store({
 
     // 模拟数组数据的添加，修改，删除
     mockData:[],
+
+    operationInfo:{}
   },
   getters: {
   },
@@ -46,6 +48,10 @@ export default new Vuex.Store({
 
     setMockData(state, mockData) {
       state.mockData = mockData
+    },
+
+    setOperationInfo(state, operationInfo) {
+      state.operationInfo = operationInfo
     },
   },
   actions: {
