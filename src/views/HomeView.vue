@@ -105,7 +105,7 @@ export default {
       this.asideWidth = item;
     },
     goToUserInfo() {
-      let parpams = this.navData.find(item => item.id === 3);
+      let parpams = this.navData.find(item => item.id === 4);
       this.$refs.navComponent.changeNav(parpams);
     },
   },

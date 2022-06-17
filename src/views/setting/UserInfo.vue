@@ -39,7 +39,7 @@
       </el-form-item>
 
       <el-form-item style="text-align: left">
-        <el-button class="hll-el-button" @click="submitForm('ruleForm')"
+        <el-button class="hll-el-button" type="primary" @click="submitForm('ruleForm')"
           >保存修改</el-button
         >
       </el-form-item>
