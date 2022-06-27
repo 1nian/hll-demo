@@ -5,6 +5,7 @@
       border
       style="width: 100%"
       :default-sort="defaultSort"
+      :cell-style="cellStyle"
     >
       <template v-for="item in titleData">
         <template v-if="!item.__slotName">
@@ -136,6 +137,9 @@ export default {
       type: Number,
       default: 100,
     },
+    cellStyle:{
+      type:Function
+    }
   },
   data() {
     return {

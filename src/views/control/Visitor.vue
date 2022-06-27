@@ -15,10 +15,8 @@
       :currentPage="currentPage"
       :pageSize="pageSize"
       :total="total"
-      :isImg="true"
       :isOperation="true"
-      :isEdit="true"
-      :isDel="true"
+      :cellStyle="cellStyle"
       @sizeChange="getSizeChange"
       @currentChange="getCurrentChange"
       @seeDtaItem="getDataItem"
@@ -103,6 +101,7 @@ export default {
       isSeeDetails: false,
       isOperationalData: false,
       isButton: false,
+      isDel: false,
       dialogInfo: "",
       title: "",
     };
@@ -241,6 +240,18 @@ export default {
           });
         });
     },
+
+    cellStyle(rows){
+      console.log(rows);
+      if(rows.column.label === '进出入状态' && rows.row.status === '进入'){
+        this.isDel = true
+        return 'color:#ff6700'
+      }
+      if(rows.column.label === '进出入状态' && rows.row.status === '离开'){
+        this.isDel = false
+        return 'color:#5473e8'
+      }
+    }
   },
 };
 </script>
