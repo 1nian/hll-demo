@@ -4,6 +4,7 @@ import {
     DropdownItem, Card, Tabs, TabPane, Option, Avatar, Dialog, Row, Col,DatePicker,Image,MessageBox,Popover,Collapse,CollapseItem,PageHeader
 } from 'element-ui'
 import 'element-ui/lib/style/theme/index.css'
+// import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.prototype.$message = Message;
 Vue.prototype.$msgbox = MessageBox;
